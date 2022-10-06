@@ -37,7 +37,7 @@ jobs:
     
     - name: execute ThingSpeak py script # run the run.py to get the latest data
       run: |
-           sudo python3 ThingSpeakAPI.py
+           python3 ThingSpeakAPI.py
     
     - name: commit changes
       run: |
