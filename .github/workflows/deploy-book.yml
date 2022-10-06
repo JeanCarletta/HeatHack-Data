@@ -25,7 +25,10 @@ jobs:
       CLIURL: ${{ secrets.CLIURL }}
     steps:
     - uses: actions/checkout@v2
-
+    - name: Set the git credentials
+      run: |
+             git config --global user.name "GithubActionRunner"
+             git config --global user.email "githubactionrunner"
     # Install dependencies
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
@@ -41,8 +44,17 @@ jobs:
     
     - name: execute ThingSpeak py script # run the run.py to get the latest data
       run: |
-          python3 ThingSpeakAPI.py
+           python3 ThingSpeakAPI.py
     
+    - name: commit changes
+      run: |
+            git add -A
+            ls -la
+    - name: push changes
+      run: |
+           git commit -m "updating thingspeak data $(date +"%D %T")"
+           git push
+              
     # Download 'data' folder from Google Drive
     - name: Make Python Directory #Download from Google Drive
       run: |
@@ -85,7 +97,6 @@ jobs:
     - name: Move Processed data to public folder
       run: |
         mv data ./_build/html/
-
     # Push the book's HTML to github-pages
     - name: GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3.6.1
