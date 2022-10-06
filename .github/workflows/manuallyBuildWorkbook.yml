@@ -20,6 +20,10 @@ jobs:
       CLIURL: ${{ secrets.CLIURL }}
     steps:
     - uses: actions/checkout@v2
+    - name: Set the git credentials
+      run: |
+             git config --global user.name "GithubActionRunner"
+             git config --global user.email "githubactionrunner"
 
     # Install dependencies
     - name: Set up Python 3.8
