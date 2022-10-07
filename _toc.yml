@@ -4,12 +4,10 @@
 format: jb-book
 root: intro
 chapters:
-# - file: test-timeseries 
-# - file: test-admonitions
-# - file: test-panels
-# - file: test-sidebars
-# - file: markdown
-# - file: notebooks
-# - file: markdown-notebooks
 - file: thingspeak-graphing
+- file: calibration-plots
+  sections:
+    - file: DHT22-comparisons/sensors-11-17
+    - file: DHT22-comparisons/sensors-18-24
+
 
