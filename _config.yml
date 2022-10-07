@@ -21,13 +21,14 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
-  path_to_book: docs  # Optional path to your book, relative to the repository root
-  branch: master  # Which branch of the repository should be used when creating links (optional)
+  url: https://github.com/JeanCarletta/HeatHack-Data  # Online location of your book
+  path_to_book: _build/html  # Optional path to your book, relative to the repository root
+  branch: main # Which branch of the repository should be used when creating links (optional)
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  extra_footer: <p> <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode"> Creative Commons Attribution-ShareAlike 4.0 International Public License </a></p>
   use_issues_button: true
   use_repository_button: true
   
