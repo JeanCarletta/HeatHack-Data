@@ -22,7 +22,7 @@ bibtex_bibfiles:
 # Information about where the book exists on the web
 repository:
   url: https://github.com/JeanCarletta/HeatHack-Data  # Online location of your book
-  path_to_book: _build/html  # Optional path to your book, relative to the repository root
+  path_to_book: _build  # Optional path to your book, relative to the repository root
   branch: main # Which branch of the repository should be used when creating links (optional)
 
 # Add GitHub buttons to your book
@@ -34,5 +34,6 @@ html:
   
 sphinx:
   config:
+    html_theme: sphinx_book_theme
     html_js_files:
     - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
