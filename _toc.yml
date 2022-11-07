@@ -4,7 +4,9 @@
 format: jb-book
 root: intro
 chapters:
-- file: thingspeak-graphing
+#- file: thingspeak-graphing
+- file: temperature-plots
+- file: rh-plots
 - file: calibration-plots
   sections:
     - file: DHT22-comparisons/sensors-11-17
