@@ -116,8 +116,13 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../thingspeak-graphing.html">
-   Basic Venue Data Plots
+  <a class="reference internal" href="../temperature-plots.html">
+   Temperature Plots (all venues)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rh-plots.html">
+   Relative Humidity Plots (all venues)
   </a>
  </li>
  <li class="toctree-l1 has-children">
@@ -350,24 +355,16 @@ title="Print to PDF"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># old code for plotting lascars against Thingspeak</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># old code for plotting lascars against Thingspeak</span>
 
 <span class="n">could</span> <span class="n">be</span> <span class="n">useful</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-    <span class="n">could</span> <span class="n">be</span> <span class="n">useful</span>
-          <span class="o">^</span>
-<span class="ne">SyntaxError</span>: invalid syntax
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using plotly.express</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using plotly.express</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
