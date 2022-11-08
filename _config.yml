@@ -35,8 +35,8 @@ html:
   use_issues_button: true
   use_repository_button: true
   
-sphinx:
-  config:
+#sphinx:
+#  config:
     # attempt to force rendering on the left; not sure why github build is different as this should be the default.
     ## This somehow makes it think it's an Executable Book and then the plots don't show.
     #html_theme_options: {"single_page": False}
