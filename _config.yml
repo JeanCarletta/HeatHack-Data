@@ -43,5 +43,5 @@ sphinx:
     ## doesn't work for getting them on the left.
     #html_sidebars: {"**":["sidebar-logo.html","search-field.html","sbt-sidebar-nav.html"]}
     html_theme: sphinx_book_theme ## this is the default
-    html_js_files: ## appears unnecessary
+    html_js_files: ## unnecessary on own machine but needed on github?
     - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
