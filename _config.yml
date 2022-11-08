@@ -35,13 +35,13 @@ html:
   use_issues_button: true
   use_repository_button: true
   
-#sphinx:
-#  config:
+sphinx:
+  config:
     # attempt to force rendering on the left; not sure why github build is different as this should be the default.
     ## This somehow makes it think it's an Executable Book and then the plots don't show.
     #html_theme_options: {"single_page": False}
     ## doesn't work for getting them on the left.
     #html_sidebars: {"**":["sidebar-logo.html","search-field.html","sbt-sidebar-nav.html"]}
-    #html_theme: sphinx_book_theme ## this is the default
-    #html_js_files: ## appears unnecessary
-    #- https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
+    html_theme: sphinx_book_theme ## this is the default
+    html_js_files: ## appears unnecessary
+    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
