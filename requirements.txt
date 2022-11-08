@@ -1,9 +1,7 @@
-jupyter-book
-matplotlib
-numpy
+jupyter-book=0.12.3
 pyppeteer
-ipython
-plotly
+ipython=8.2.0
+plotly=5.7.0
 pandas
 
 # data processing reqs
