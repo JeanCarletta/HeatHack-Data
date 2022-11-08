@@ -37,6 +37,8 @@ html:
   
 sphinx:
   config:
-    html_theme: sphinx_book_theme
-    html_js_files:
-    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
+    # attempt to force rendering on the left; not sure why github build is different as this should be the default.
+    html_sidebars: {"**":["sidebar-logo.html","search-field.html","sbt-sidebar-nav.html"]}
+    #html_theme: sphinx_book_theme ## this is the default
+    #html_js_files: ## appears unnecessary
+    #- https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
