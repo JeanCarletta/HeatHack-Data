@@ -11,5 +11,6 @@ chapters:
   sections:
     - file: DHT22-comparisons/sensors-11-17
     - file: DHT22-comparisons/sensors-18-24
+- file: with-use-diary
 
 
