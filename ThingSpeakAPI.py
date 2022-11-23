@@ -57,27 +57,29 @@ for deviceIndex, deviceRow in venueKeys.iterrows() :
     thisChannelID = deviceRow['channel_id']
     try:
         response = requests.get(f'https://api.thingspeak.com/channels/{thisChannelID}/feeds.json{params}');
+        responseRaw = response.json()['feeds']
+        responseDataFrame = pd.json_normalize(responseRaw)
+        if (responseDataFrame.size > 0) : 
+            responseDataFrame.columns = ["timestamp", "entry_id", "temperature", "rh", "voltage"]
+
+            print('Adding new data to file: \n')
+            print(responseDataFrame)
+            responseCSV = responseDataFrame.to_csv()
+        
+            #filePath = os.path.join(baseDirectory, 'thermal-monitoring', 'deviceData', deviceRow['sensor_MAC'] + '.csv')
+
+            try:
+                responseDataFrame.to_csv(filePath, mode='a', index=False, header=not os.path.exists(filePath))
+            except Exception as e:
+                print("Error writing device data to file: ", str(e))
+        else:
+            print(f"No new data for sensor {deviceRow['channel_id']}.")
     except Exception as e:
         print("Error getting device data: ", str(e))
+        pass
 
     
-    responseRaw = response.json()['feeds']
-    responseDataFrame = pd.json_normalize(responseRaw)
-    if (responseDataFrame.size > 0) : 
-        responseDataFrame.columns = ["timestamp", "entry_id", "temperature", "rh", "voltage"]
 
-        print('Adding new data to file: \n')
-        print(responseDataFrame)
-        responseCSV = responseDataFrame.to_csv()
-        
-        #filePath = os.path.join(baseDirectory, 'thermal-monitoring', 'deviceData', deviceRow['sensor_MAC'] + '.csv')
-
-        try:
-            responseDataFrame.to_csv(filePath, mode='a', index=False, header=not os.path.exists(filePath))
-        except Exception as e:
-            print("Error writing device data to file: ", str(e))
-    else:
-        print(f"No new data for sensor {deviceRow['channel_id']}.")
     
 
 
