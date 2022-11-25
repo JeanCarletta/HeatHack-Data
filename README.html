@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>testbook &#8212; HeatHack Data</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -423,17 +422,17 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="testbook">
+  <div class="tex2jax_ignore mathjax_ignore section" id="testbook">
 <h1>testbook<a class="headerlink" href="#testbook" title="Permalink to this headline">#</a></h1>
 <p>We want to produce plots of temperature and RH data from the venues.  There are around 40 venues with different data feeds.  We do not want the venues to be identifiable in case that increases the risk of theft.   The plots should be produced automatically using Jupyter Book.  It would be better if there are 40 books in a list rather than one book with 40 “chapters” because that would reduce processing time - the entire book wouldn’t be rebuilt every time one data file changes - but I think this is very difficult.  In practice, the more venues we have at once in the programme and the more of them that have internet, the less likely we are to do enough processing to get charged for it.</p>
-<section id="two-uses-cases">
+<div class="section" id="two-uses-cases">
 <h2>Two uses cases:<a class="headerlink" href="#two-uses-cases" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Internet-connected sensors (this is most venues, we think): Each venue has one device sending data to Thingspeak, and therefore one Thingspeak feed identified by id number with a Read API key.  We only intend to use ThingSpeak for reassurance that the data is there, and port the data to Github for plotting properly.</p></li>
 <li><p>Standalone sensors for venues without wifi:  they email data to our automated mailbox every week or two.  There is a unique id for the device included in the header line for each file. Every download is the complete flash contents for the device and therefore may contain data this is redundant with what’s already been downloaded.</p></li>
 </ul>
-</section>
-<section id="inputs">
+</div>
+<div class="section" id="inputs">
 <h2>Inputs:<a class="headerlink" href="#inputs" title="Permalink to this headline">#</a></h2>
 <p>:TODO: CK check that I’m describing how the feeds/devices are identified correctly in both cases below, create these CSV files from your database, ensure there is a realistic example data file for standalone version in Github or on Google Drive, depending on what’s being written and tested, plus upload a calibration data file to Github.</p>
 <ol>
@@ -450,15 +449,15 @@ title="Print to PDF"
 <ol class="simple">
 <li><p>Calibration data sets - rows are timestamps, columns are output temp and RH readings from around 10 devices at a time with a header that uses some value from (1) and (2), uploaded to Github by hand.</p></li>
 </ol>
-</section>
-<section id="data-storage">
+</div>
+<div class="section" id="data-storage">
 <h2>Data storage<a class="headerlink" href="#data-storage" title="Permalink to this headline">#</a></h2>
 <p>Data archive files, one per venue:</p>
 <ul class="simple">
 <li><p>a CSV file that always contains all of the data acquired so far for that venue. :TODO: how big will these get over the year at 5 min intervals?  Still small enough to be OK, right?  When do we need to worry about splitting it up - once a year or once a decade?</p></li>
 </ul>
-</section>
-<section id="intended-automation">
+</div>
+<div class="section" id="intended-automation">
 <h2>Intended automation:<a class="headerlink" href="#intended-automation" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Google App Script (standalone only): Once a day, look for all new data email attachments (from standalone venues) and place in a Google Drive. Keep the emailed data in Google Drive for safety but ensure it doesn’t get processed twice.  Status:  API calls tested but needs refinement to get the right attachments, those sent to <a class="reference external" href="mailto:data&#37;&#52;&#48;heathack&#46;org">data<span>&#64;</span>heathack<span>&#46;</span>org</a>, which is only an alias.  Probably still needs error logs for us to clean up problems.</p></li>
@@ -476,8 +475,8 @@ title="Print to PDF"
 <li><p>Github Action (internet-connected only): Once a week, traverse the rows of the CSV file listing the internet-connected venues.  Check the last timestamp in the data archive for the venue and using the feed id and Read API, fetch all new data from the feed.  Append to the archive.   This is once a week because we expect daily data coming in and don’t want to get too close to the processing limit that will trigger payments to Github.</p></li>
 <li><p>GitHub Action (both): triggered on repository changes, build the book containing the plots on Github Pages. Status: experimentation towards what we want only.</p></li>
 </ol>
-</section>
-<section id="desired-plots">
+</div>
+<div class="section" id="desired-plots">
 <h2>Desired plots<a class="headerlink" href="#desired-plots" title="Permalink to this headline">#</a></h2>
 <p>The plots are about doing what’s usable and possible easily - we should specify them functionally with minimal requirements and what we’d ideally like to see.  Even just the basic plot with pan and zoom is a step up from what the users usually have.</p>
 <ol class="simple">
@@ -486,8 +485,8 @@ title="Print to PDF"
 <li><p>dropdown a start date and end date (or always a week or month at a time?), choose temperature or RH, and just create a basic plot that way with the usual plotly pan/zoom etc options.  This is to make it easier to explore the data; after a year the initial plots will be hard to read if we use the whole data archive.</p></li>
 <li><p>Calibration plot - graph the 10 devices against each other with a legend that lets individual devices be hidden.</p></li>
 </ol>
-</section>
-<section id="implementation-notes">
+</div>
+<div class="section" id="implementation-notes">
 <h2>Implementation notes<a class="headerlink" href="#implementation-notes" title="Permalink to this headline">#</a></h2>
 <p>Plotly express is syntactic sugar over graph_objects; drop down into the graph_objects themselves allows more possibilities for formatting.  Some very useful plotting capabilities, like dropdown menus allowing date choices, might require further libraries (that start to be paid quickly, I think), cf Dash.  UI controls don’t necessarily need to be in the plots themselves.</p>
 <ul class="simple">
@@ -499,8 +498,8 @@ title="Print to PDF"
 <p>Information about non-plotly approaches:  <a class="reference external" href="https://jupyterbook.org/interactive/interactive.html">https://jupyterbook.org/interactive/interactive.html</a> One consideration is whether they’re going to need internet access to look at graphs - they might not have that when they’re together if they meet on the premises.  Altair sounded like it might be useful in that situation.</p>
 <p>:TODO: find out if we can hide the code.</p>
 <p>The graphs look terrible in pdf as generated via html.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
