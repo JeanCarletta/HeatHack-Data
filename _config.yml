@@ -18,9 +18,9 @@ latex:
   latex_documents:
     targetname: book.tex
 
-# Add a bibtex file so that we can create citations
-bibtex_bibfiles:
-  - references.bib
+# launch_buttons:
+#   thebe: false
+
 
 # Information about where the book exists on the web
 repository:
@@ -43,5 +43,8 @@ sphinx:
     ## doesn't work for getting them on the left.
     #html_sidebars: {"**":["sidebar-logo.html","search-field.html","sbt-sidebar-nav.html"]}
     html_theme: sphinx_book_theme ## this is the default
+    # html_theme_options:  this works, but then I have to transfer the repo information here.
+    #   use_download_button: false  ## removes PDF print button, but this only crashes on Microsoft Edge.
+    #   show_navbar_depth: 4
     html_js_files: ## unnecessary on own machine but needed on github?
     - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js # might be required for plotly plots to show
