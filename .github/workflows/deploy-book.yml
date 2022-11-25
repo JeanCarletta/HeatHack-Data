@@ -79,13 +79,13 @@ jobs:
     - name: Build the book
       run: |
         jupyter-book clean .
-        jupyter-book build .
+        jupyter-book build . --builder html
     
     # Build Pdf via html
-    - name: Build the pdf via HTML
-      run: |
-        jupyter-book build ./ --builder pdfhtml
-        mv ./_build/pdf/book.pdf ./_build/html/book-via-html.pdf
+    # - name: Build the pdf via HTML
+    #   run: |
+    #     jupyter-book build ./ --builder pdfhtml
+    #     mv ./_build/pdf/book.pdf ./_build/html/book-via-html.pdf
     
     # Build Pdf via latex
     #- name: Build the pdf via latex
