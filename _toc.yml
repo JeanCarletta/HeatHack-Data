@@ -13,10 +13,6 @@ chapters:
     - file: DHT22-comparisons/sensors-18-24
     - file: DHT22-comparisons/sensors-1-2-10-25-26-27
 - file: with-use-diary
-- file: extras
-  sections:
-    - file: extras/venue-7-electrics
-    - file: extras/venue-11-lascars
 - file: run-time
     
 
