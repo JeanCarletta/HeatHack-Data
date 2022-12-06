@@ -8,10 +8,9 @@ logo: heat_hack_logo1.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
-  exclude_patterns: 
-    - 'thingspeak-graphing.ipynb'
-    - 'DHT22-comparisons/plot-against-lascars.ipynb'
+  execute_notebooks: force # will cache work if only the data files have changed?  I don't think so.
+  # exclude-patterns: [DHT22-comparisons/plot-against-lascars] didn't seem to work.
+  timeout: 50
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -37,6 +36,7 @@ html:
   
 sphinx:
   config:
+    #execution_show_tb: True can't see where failed executions get shown.
     # attempt to force rendering on the left; not sure why github build is different as this should be the default.
     ## This somehow makes it think it's an Executable Book and then the plots don't show.
     #html_theme_options: {"single_page": False}
