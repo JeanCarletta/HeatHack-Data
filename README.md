@@ -1,36 +1,57 @@
-# testbook
+# HeatHack Data Book
 
-We want to produce plots of temperature and RH data from the venues.  There are around 40 venues with different data feeds.  We do not want the venues to be identifiable in case that increases the risk of theft.   The plots should be produced automatically using Jupyter Book.  It would be better if there are 40 books in a list rather than one book with 40 "chapters" because that would reduce processing time - the entire book wouldn't be rebuilt every time one data file changes - but I think this is very difficult.  In practice, the more venues we have at once in the programme and the more of them that have internet, the less likely we are to do enough processing to get charged for it. 
+A Jupyter Book that allows viewing of HeatHack venue temperature and RH data.
 
-## Two uses cases:
+## Future aspirations
 
-- Internet-connected sensors (this is most venues, we think): Each venue has one device sending data to Thingspeak, and therefore one Thingspeak feed identified by id number with a Read API key.  We only intend to use ThingSpeak for reassurance that the data is there, and port the data to Github for plotting properly.
+### More scalable UI that handles more venues better
 
-- Standalone sensors for venues without wifi:  they email data to our automated mailbox every week or two.  There is a unique id for the device included in the header line for each file. Every download is the complete flash contents for the device and therefore may contain data this is redundant with what's already been downloaded.
+We want to replace dropdown menus for the venue id with something that doesn't require scrolling through a long list, and preferably be able to have temperature
+and rh as choices on the same plot, just substituting appropriate data and changing the scale.
 
-## Inputs:
+Ipywidgets would allow for this, with text entry that we can validate.  However, 
+ipywidgets 5 is great with a jupyter notebook server, but will require
+something like thebe for remote execution if converted to html. The security of that is a bit complicated. 
 
-:TODO: CK check that I'm describing how the feeds/devices are identified correctly in both cases below, create these CSV files from your database, ensure there is a realistic example data file for standalone version in Github or on Google Drive, depending on what's being written and tested, plus upload a calibration data file to Github.
+The question is then whether there is a reasonable way to do this.  Plotly
+ allows for buttons, sliders, and dropdowns - 
+ 
+ - https://plotly.com/python/#controls
+ 
+ We're already using all three so all we could do is lose some existing functionality, I think.
 
-1. A CSV file with one row per internet-connected venue containing a human-friendly (short alphabetic) code to use in the book to identify the venue, the Thingspeak feed ID and Read API key, and filename for its data archive.
-2. A CSV file one with row per standalone venue containing a human-friendly (short alphabetic) code to use in the book to identify the venue, the unique id for the device, and the filename for its data archive.
-3. Thingspeak feeds and new data files.
-4. DESIRABLE:  hand-authored space use diary as a csv file with the days of the weeks as rows and the times when occupancy changes; what temperature each change requires.  Example:
+### plotting against building use diary
+
+Hand-authored space use diary as a csv file with the days of the weeks as rows and the times when occupancy changes; what temperature each change requires.  Example:
 
     Monday, 9:00, 18, 11:00, 10, 17:00, 21, 18:00, 10
     ...
+
+An example of how to handle the plotting end of this is in with-use-diary.ipynb.
+
+### plotting against heating schedule
+
 
 If they have a modern (predictive) timeswitch, these should be the same as their timeswitch settings; it's pairs of times and temperatures (deg C).  For some venues, it might be what they want to achieve rather than actual control they have, so there might also be an old-fashioned description in the same format of when the heating system actually comes on, not when the people are in and their demand temperature.
 
 Having when users are in the space and what they need for temperature has real benefits because we could then perhaps highlight times when the users are in the space using vertical bars and shading and summmarise how often they are way over or under their intentions.  They could submit them using a Google form and we can move them over to Github by hand.  This means for some venues, this file is likely to be missing and graphs relying on it (or plot shading and bars) should be omitted.
 
-5. Calibration data sets - rows are timestamps, columns are output temp and RH readings from around 10 devices at a time with a header that uses some value from (1) and (2), uploaded to Github by hand.  
+## Two data sources.
 
-## Data storage
+- Internet-connected sensors: Each venue has one device sending data to Thingspeak, and therefore one Thingspeak feed identified by id number with a Read API key.  We only use ThingSpeak for reassurance that the data is there, and port the data to Github for plotting properly and for engineers to download data for 
+plotting in Excel.  The automatic build to get any new data from these feeds is working.
 
-Data archive files, one per venue: 
+- Standalone sensors for venues without wifi:  they email data to our automated mailbox every week or two.  There is a unique id for the device included in the header line for each file. Every download is the complete flash contents for the device and therefore may contain data this is redundant with what's already been downloaded.  We have the scripts to handle the data but haven't connected them up.
 
-- a CSV file that always contains all of the data acquired so far for that venue. :TODO: how big will these get over the year at 5 min intervals?  Still small enough to be OK, right?  When do we need to worry about splitting it up - once a year or once a decade?
+## Inputs:
+
+Venues are identified by an id - integer.  Currently standalone sensor ids count down from 99.  
+
+**venue-keys.csv** A CSV file with one row per venue containing venue_id, sensor_id (for use in finding the right calibration test, not always the same as the venue_id), the MAC address of the microcontroller built into the sensor unit (rendered as a string so it may be short characters if any components in the address started with 0), and, for internet connected sensors, the ThingSpeak channel.  
+
+**Data files** The data for the venues are stored in deviceData with a filename that has the venue id and MAC address.
+
+**Calibration data** We test banks of around eight sensors against each other and have some of the test results in DHT22-comparisons.  NB these are by sensor id, not venue id.
 
 ## Intended automation:
 
@@ -50,17 +71,6 @@ Data archive files, one per venue:
 
 5. GitHub Action (both): triggered on repository changes, build the book containing the plots on Github Pages. Status: experimentation towards what we want only.
 
-## Desired plots
-
-The plots are about doing what's usable and possible easily - we should specify them functionally with minimal requirements and what we'd ideally like to see.  Even just the basic plot with pan and zoom is a step up from what the users usually have.
-
-1. basic plot as below.
-
-1.  a plot that lets people judge whether they are keeping their users within comfortable temperature bounds when the space is in use.  Minimally, this is a horizontal line at 16C, the Child Care Commission minimum.  If we can handle space diaries and manage vertical bars with shading plus perhaps a text label with the demand temperature, that would be brilliant. Summaries of performance for each timeslot  (Monday 9-11: 90% within 1C of 18C or some summary plot, and so on).
-
-2. dropdown a start date and end date (or always a week or month at a time?), choose temperature or RH, and just create a basic plot that way with the usual plotly pan/zoom etc options.  This is to make it easier to explore the data; after a year the initial plots will be hard to read if we use the whole data archive.   
-
-3.  Calibration plot - graph the 10 devices against each other with a legend that lets individual devices be hidden.
 
  ## Implementation notes
 
@@ -77,7 +87,4 @@ On our current thingspeak feeds, temperature is field1 and RH is field2 - we may
 
 Information about non-plotly approaches:  https://jupyterbook.org/interactive/interactive.html One consideration is whether they're going to need internet access to look at graphs - they might not have that when they're together if they meet on the premises.  Altair sounded like it might be useful in that situation.
 
-:TODO: find out if we can hide the code.
-
-The graphs look terrible in pdf as generated via html.
 
