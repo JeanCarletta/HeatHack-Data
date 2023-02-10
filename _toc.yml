@@ -4,7 +4,7 @@
 format: jb-book
 root: intro
 chapters:
-#- file: thingspeak-graphing
+- file: data-download
 - file: temperature-plots
 - file: rh-plots
 - file: calibration-plots
