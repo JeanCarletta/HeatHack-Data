@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Temperature Plots (all venues)" href="temperature-plots.html" />
+    <link rel="next" title="Downloading data to plot separately" href="data-download.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,6 +116,11 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="data-download.html">
+   Downloading data to plot separately
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="temperature-plots.html">
    Temperature Plots (all venues)
@@ -344,20 +349,15 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="heathack-data-book">
 <h1>HeatHack Data Book<a class="headerlink" href="#heathack-data-book" title="Permalink to this headline">#</a></h1>
-<p>This website shows plots of temperature and relative humidity data for HeatHack’s participating venues.  To view your data, you’ll need your venue number.  We don’t use venue names, for security.</p>
-<p>We are still adding venues who recently had their sensors shipped to them, and getting the automatic transfer of data organised - please bear with us.</p>
-<p>We will add more types of plots when we have more data coming in.</p>
-<p>Data won’t be transferred here from ThingSpeak or from our data email instantly.  It currently happens once a week but we’ll make that more frequent.  If you want to see whether you have data coming in right now and you have an internet-connected sensor, you can look at your recent data on ThingSpeak:</p>
+<p>This website shows plots of temperature and relative humidity data for HeatHack’s participating venues and allows you to download the data for plotting yourself.  To use it, you’ll need your venue number.  We don’t use venue names, for security.</p>
+<p>For those with internet-connected monitors that rely on the building’s wifi, the data will be transferred here automatically every few hours.  If you need to see whether you have data coming in faster than that and you have an internet-connected sensor, you can look at your recent data on ThingSpeak, but there is still an arbitrary time delay before it will appear.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://uk.mathworks.com/matlabcentral/profile/authors/15201195?detail=thingspeak">ThingSpeak data plots</a></p></li>
 </ul>
-<p>If you prefer to plot your data in Excel, you can download your full data here:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/JeanCarletta/HeatHack-Data/tree/main/deviceData">Data CSV files</a></p></li>
-</ul>
-<p>If you any issues, for instance, with the timestamp format, let us know - our Excel handles it natively, but yours may not.</p>
+<p>For those with standalone monitors, we currently have to hand-process the data, so there may be more of a lag before you see it.  Your data will not be available on ThingSpeak, but appear directly here.</p>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="data-download.html">Downloading data to plot separately</a></li>
 <li class="toctree-l1"><a class="reference internal" href="temperature-plots.html">Temperature Plots (all venues)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rh-plots.html">Relative Humidity Plots (all venues)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calibration-plots.html">Comparing sensors - our calibration plots</a></li>
@@ -394,10 +394,10 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="temperature-plots.html" title="next page">
+    <a class='right-next' id="next-link" href="data-download.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Temperature Plots (all venues)</p>
+        <p class="prev-next-title">Downloading data to plot separately</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
