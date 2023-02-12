@@ -6,7 +6,7 @@ For those with internet-connected monitors that rely on the building's wifi, the
 
 - [ThingSpeak data plots](https://uk.mathworks.com/matlabcentral/profile/authors/15201195?detail=thingspeak)
 
-For those with standalone monitors, we currently have to hand-process the data, so there may be more of a lag before you see it.  Your data will not be available on ThingSpeak, but appear directly here.
+For those with standalone monitors, we currently have to hand-process the data, so there may be more of a lag before you see it.  Your data will not be available on ThingSpeak, but appear directly here.  The sensor units don't contain a proper clock, so the times will progressively get further "out" the longer you leave it without downloading the data.  We may be able to correct the times when we process the data, but for now we just let them be a bit out.  
 
 ```{tableofcontents}
 ```
