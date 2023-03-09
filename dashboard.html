@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Dashboard &#8212; HeatHack Data</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'dashboard';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Run time" href="run-time.html" />
+    <link rel="prev" title="Extras" href="extras.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/heat_hack_logo1.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/heat_hack_logo1.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    HeatHack Data Book
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data-download.html">Downloading data to plot separately</a></li>
+<li class="toctree-l1"><a class="reference internal" href="temperature-plots.html">Temperature Plots (all venues)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rh-plots.html">Relative Humidity Plots (all venues)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="calibration-plots.html">Comparing sensors - our calibration plots</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="DHT22-comparisons/sensors-11-17.html">Sensors 11-17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DHT22-comparisons/sensors-18-24.html">Sensors 18-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DHT22-comparisons/sensors-1-2-10-25-26-27.html">Sensors 1, 2, 10, 25-27</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extras.html">Extras</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-time.html">Run time</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/JeanCarletta/HeatHack-Data" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/JeanCarletta/HeatHack-Data/issues/new?title=Issue%20on%20page%20%2Fdashboard.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/dashboard.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Dashboard</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dashboard">
+<h1>Dashboard<a class="headerlink" href="#dashboard" title="Permalink to this heading">#</a></h1>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports </span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>   
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+
+<span class="c1"># Get the possible data venues</span>
+<span class="n">venuekeysfile</span> <span class="o">=</span> <span class="s2">&quot;venue-keys.csv&quot;</span>
+<span class="n">dfVenueKeys</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">venuekeysfile</span><span class="p">)</span>
+
+<span class="n">dfDash</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days captured&quot;</span><span class="p">])</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days captured&quot;</span><span class="p">))</span>
+
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">venueSensorDetails</span> <span class="ow">in</span> <span class="n">dfVenueKeys</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    
+    <span class="n">sensorMacOfSelection</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;sensor_MAC&#39;</span><span class="p">]</span>
+    <span class="n">venueOfSelection</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">])</span>
+    <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deviceData/&#39;</span><span class="o">+</span> <span class="s2">&quot;venue_&quot;</span> <span class="o">+</span> <span class="n">venueOfSelection</span> <span class="o">+</span> <span class="s2">&quot;_with_device_&quot;</span> <span class="o">+</span> <span class="n">sensorMacOfSelection</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span> <span class="p">)</span>
+    <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
+    <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span>
+    <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)]</span>
+    <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># eliminate rogue data</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">))</span>
+    <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Venue	first timestamp	last timestamp	days captured
+1	2022-10-20 13:37	2023-03-09 11:59	105
+2	2023-01-30 14:36	2023-03-09 11:58	38
+2h	2023-02-12 10:47	2023-02-20 21:02	8
+3	2022-10-28 17:16	2023-01-30 06:21	91
+5	2022-12-09 14:42	2023-03-09 11:56	77
+6	2022-09-01 21:32	2022-09-16 13:23	0
+7	2022-11-03 00:01	2023-03-09 11:52	115
+8	2022-12-11 12:40	2023-03-09 11:55	44
+9	2023-01-09 22:51	2023-02-15 14:19	8
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10	2022-12-13 20:18	2023-01-24 11:30	38
+11	2022-09-27 09:49	2023-03-09 11:56	149
+12	2022-12-02 17:45	2023-01-06 13:01	5
+13	2023-02-07 10:12	2023-03-09 11:56	22
+15	2022-10-28 19:59	2022-11-10 21:29	12
+16	2022-10-28 11:05	2023-03-09 11:56	25
+17	2023-02-08 09:22	2023-02-26 13:41	0
+18	2022-10-27 21:39	2023-03-02 21:32	17
+19	2022-12-08 07:09	2023-03-09 11:58	78
+20	2023-01-06 13:16	2023-01-06 16:41	0
+21	2023-01-13 10:25	2023-03-09 11:58	27
+22	2022-12-05 21:10	2023-01-22 19:06	5
+23	2023-02-16 10:12	2023-02-23 17:49	6
+24	2022-12-06 22:29	2023-01-22 12:42	23
+26	2022-12-10 18:06	2023-02-10 07:53	0
+31	2023-01-16 14:37	2023-01-20 13:30	1
+33	2023-01-17 23:18	2023-01-29 19:27	0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>97lh	2023-02-04 10:50	2023-02-12 12:30	8
+97s	2023-01-18 12:09	2023-02-12 08:41	24
+98	2022-12-24 12:27	2023-02-06 18:26	42
+99	2022-10-27 16:32	2022-11-03 07:45	3
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Venue</th>
+      <th>first timestamp</th>
+      <th>last timestamp</th>
+      <th>days captured</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2022-10-20 13:37</td>
+      <td>2023-03-09 11:59</td>
+      <td>106</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2023-01-30 14:36</td>
+      <td>2023-03-09 11:58</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2h</td>
+      <td>2023-02-12 10:47</td>
+      <td>2023-02-20 21:02</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2022-10-28 17:16</td>
+      <td>2023-01-30 06:21</td>
+      <td>91</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>2022-12-09 14:42</td>
+      <td>2023-03-09 11:56</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>2022-09-01 21:32</td>
+      <td>2022-09-16 13:23</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>2022-11-03 00:01</td>
+      <td>2023-03-09 11:52</td>
+      <td>116</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>2022-12-11 12:40</td>
+      <td>2023-03-09 11:55</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>2023-01-09 22:51</td>
+      <td>2023-02-15 14:19</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>2022-12-13 20:18</td>
+      <td>2023-01-24 11:30</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>2022-09-27 09:49</td>
+      <td>2023-03-09 11:56</td>
+      <td>150</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>2022-12-02 17:45</td>
+      <td>2023-01-06 13:01</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>2023-02-07 10:12</td>
+      <td>2023-03-09 11:56</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>15</td>
+      <td>2022-10-28 19:59</td>
+      <td>2022-11-10 21:29</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>16</td>
+      <td>2022-10-28 11:05</td>
+      <td>2023-03-09 11:56</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>17</td>
+      <td>2023-02-08 09:22</td>
+      <td>2023-02-26 13:41</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>18</td>
+      <td>2022-10-27 21:39</td>
+      <td>2023-03-02 21:32</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>19</td>
+      <td>2022-12-08 07:09</td>
+      <td>2023-03-09 11:58</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>20</td>
+      <td>2023-01-06 13:16</td>
+      <td>2023-01-06 16:41</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>21</td>
+      <td>2023-01-13 10:25</td>
+      <td>2023-03-09 11:58</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>22</td>
+      <td>2022-12-05 21:10</td>
+      <td>2023-01-22 19:06</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>23</td>
+      <td>2023-02-16 10:12</td>
+      <td>2023-02-23 17:49</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>24</td>
+      <td>2022-12-06 22:29</td>
+      <td>2023-01-22 12:42</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>26</td>
+      <td>2022-12-10 18:06</td>
+      <td>2023-02-10 07:53</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>31</td>
+      <td>2023-01-16 14:37</td>
+      <td>2023-01-20 13:30</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>33</td>
+      <td>2023-01-17 23:18</td>
+      <td>2023-01-29 19:27</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>97lh</td>
+      <td>2023-02-04 10:50</td>
+      <td>2023-02-12 12:30</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>97s</td>
+      <td>2023-01-18 12:09</td>
+      <td>2023-02-12 08:41</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>98</td>
+      <td>2022-12-24 12:27</td>
+      <td>2023-02-06 18:26</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>99</td>
+      <td>2022-10-27 16:32</td>
+      <td>2022-11-03 07:45</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="extras.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Extras</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="run-time.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Run time</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By HeatHack
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <p> <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode"> Creative Commons Attribution-ShareAlike 4.0 International Public License </a></p>
+</div>
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
