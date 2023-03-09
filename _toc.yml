@@ -14,6 +14,7 @@ chapters:
     - file: DHT22-comparisons/sensors-1-2-10-25-26-27
 #- file: with-use-diary - not currently working
 - file: extras
+- file: dashboard
 - file: run-time
     
 
