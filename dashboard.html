@@ -375,11 +375,9 @@ document.write(`
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports </span>
-<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>   
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+
 
 <span class="c1"># Get the possible data venues</span>
 <span class="n">venuekeysfile</span> <span class="o">=</span> <span class="s2">&quot;venue-keys.csv&quot;</span>
@@ -388,7 +386,7 @@ document.write(`
 <span class="n">dfDash</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days_captured&quot;</span><span class="p">])</span>
 
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days captured&quot;</span><span class="p">))</span>
+<span class="c1">#print(&quot;%s\t%s\t%s\t%s&quot; % (&quot;Venue&quot;,&quot;first timestamp&quot;,&quot;last timestamp&quot;,&quot;days captured&quot;))</span>
 
 
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">venueSensorDetails</span> <span class="ow">in</span> <span class="n">dfVenueKeys</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
@@ -400,66 +398,9 @@ document.write(`
     <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span>
     <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)]</span>
     <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># eliminate rogue data</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
-        <span class="p">(</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">))</span>
+    <span class="c1">#print(&quot;%s\t%s\t%s\t%d&quot; %</span>
+    <span class="c1">#    (venueOfSelection, dfTempDataSet.timestamp.min().strftime(&#39;%Y-%m-%d %H:%M&#39;), dfTempDataSet.timestamp.max().strftime(&#39;%Y-%m-%d %H:%M&#39;), len(dfTempDataSet.timestamp)/288))</span>
     <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">)])</span>
-
-<span class="n">pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;status.csv&quot;</span><span class="p">,</span><span class="n">dfDash</span><span class="p">)</span> 
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Venue	first timestamp	last timestamp	days captured
-1	2022-10-20 13:37	2023-03-10 13:31	106
-2	2023-01-30 14:36	2023-03-10 13:30	39
-2h	2023-02-12 10:47	2023-02-20 21:02	8
-3	2022-10-28 17:16	2023-01-30 06:21	91
-5	2022-12-09 14:42	2023-03-10 13:33	78
-6	2022-09-01 21:32	2022-09-16 13:23	0
-7	2022-11-03 00:01	2023-03-10 13:30	116
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8	2022-12-11 12:40	2023-03-10 13:32	45
-9	2023-02-08 10:31	2023-02-15 14:19	7
-10	2022-12-13 20:18	2023-01-24 11:30	38
-11	2022-09-27 09:49	2023-03-10 13:30	151
-12	2022-12-02 17:45	2023-01-06 13:01	5
-13	2023-02-07 10:12	2023-03-10 13:32	23
-15	2022-10-28 19:59	2022-11-10 21:29	12
-16	2022-10-28 11:05	2023-03-10 13:29	26
-17	2023-02-08 09:22	2023-03-09 13:25	0
-18	2023-02-01 09:50	2023-03-02 21:32	13
-19	2022-12-08 07:09	2023-03-10 13:29	79
-20	2023-01-06 13:16	2023-01-06 16:41	0
-21	2023-01-13 10:25	2023-03-10 13:29	28
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>22	2022-12-05 21:10	2023-01-22 19:06	5
-23	2023-02-16 10:12	2023-02-23 17:49	6
-24	2022-12-06 22:29	2023-01-22 12:42	23
-26	2022-12-10 18:06	2023-02-10 07:53	0
-31	2023-01-16 14:37	2023-01-20 13:30	1
-33	2023-01-17 23:18	2023-01-29 19:27	0
-97lh	2023-02-04 10:50	2023-02-12 12:30	8
-97s	2023-01-18 12:09	2023-02-12 08:41	24
-98	2022-12-24 12:27	2023-02-06 18:26	42
-99	2022-10-27 16:32	2022-11-03 07:45	3
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">31</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%s</span><span class="se">\t</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>         <span class="p">(</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">)])</span>
-<span class="ne">---&gt; </span><span class="mi">31</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;status.csv&quot;</span><span class="p">,</span><span class="n">dfDash</span><span class="p">)</span> 
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/__init__.py:264,</span> in <span class="ni">__getattr__</span><span class="nt">(name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span>     <span class="kn">from</span> <span class="nn">pandas.core.arrays.sparse</span> <span class="kn">import</span> <span class="n">SparseArray</span> <span class="k">as</span> <span class="n">_SparseArray</span>
-<span class="g g-Whitespace">    </span><span class="mi">262</span>     <span class="k">return</span> <span class="n">_SparseArray</span>
-<span class="ne">--&gt; </span><span class="mi">264</span> <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;module &#39;pandas&#39; has no attribute &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-
-<span class="ne">AttributeError</span>: module &#39;pandas&#39; has no attribute &#39;to_csv&#39;
 </pre></div>
 </div>
 </div>
@@ -471,6 +412,245 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Venue</th>
+      <th>first_timestamp</th>
+      <th>last_timestamp</th>
+      <th>days_captured</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2022-10-20 13:37</td>
+      <td>2023-03-10 14:41</td>
+      <td>107</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2023-01-30 14:36</td>
+      <td>2023-03-10 14:40</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2h</td>
+      <td>2023-02-12 10:47</td>
+      <td>2023-02-20 21:02</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2022-10-28 17:16</td>
+      <td>2023-01-30 06:21</td>
+      <td>91</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>2022-12-09 14:42</td>
+      <td>2023-03-10 14:37</td>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>2022-09-01 21:32</td>
+      <td>2022-09-16 13:23</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>2022-11-03 00:01</td>
+      <td>2023-03-10 14:40</td>
+      <td>117</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>2022-12-11 12:40</td>
+      <td>2023-03-10 14:37</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>2023-02-08 10:31</td>
+      <td>2023-02-15 14:19</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>2022-12-13 20:18</td>
+      <td>2023-01-24 11:30</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>2022-09-27 09:49</td>
+      <td>2023-03-10 14:39</td>
+      <td>151</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>2022-12-02 17:45</td>
+      <td>2023-01-06 13:01</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>2023-02-07 10:12</td>
+      <td>2023-03-10 14:37</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>15</td>
+      <td>2022-10-28 19:59</td>
+      <td>2022-11-10 21:29</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>16</td>
+      <td>2022-10-28 11:05</td>
+      <td>2023-03-10 14:39</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>17</td>
+      <td>2023-02-08 09:22</td>
+      <td>2023-03-09 13:25</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>18</td>
+      <td>2023-02-01 09:50</td>
+      <td>2023-03-02 21:32</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>19</td>
+      <td>2022-12-08 07:09</td>
+      <td>2023-03-10 14:39</td>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>20</td>
+      <td>2023-01-06 13:16</td>
+      <td>2023-01-06 16:41</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>21</td>
+      <td>2023-01-13 10:25</td>
+      <td>2023-03-10 14:39</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>22</td>
+      <td>2022-12-05 21:10</td>
+      <td>2023-01-22 19:06</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>23</td>
+      <td>2023-02-16 10:12</td>
+      <td>2023-02-23 17:49</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>24</td>
+      <td>2022-12-06 22:29</td>
+      <td>2023-01-22 12:42</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>26</td>
+      <td>2022-12-10 18:06</td>
+      <td>2023-02-10 07:53</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>31</td>
+      <td>2023-01-16 14:37</td>
+      <td>2023-01-20 13:30</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>33</td>
+      <td>2023-01-17 23:18</td>
+      <td>2023-01-29 19:27</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>97lh</td>
+      <td>2023-02-04 10:50</td>
+      <td>2023-02-12 12:30</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>97s</td>
+      <td>2023-01-18 12:09</td>
+      <td>2023-02-12 08:41</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>98</td>
+      <td>2022-12-24 12:27</td>
+      <td>2023-02-06 18:26</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>99</td>
+      <td>2022-10-27 16:32</td>
+      <td>2022-11-03 07:45</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 
