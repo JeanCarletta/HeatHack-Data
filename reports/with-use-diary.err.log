@@ -1,0 +1,198 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Imports 
+import ipywidgets as widgets
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go   
+import os
+from IPython.display import display
+
+# Get the possible data venues
+venuekeysfile = "venue-keys.csv"
+dfVenueKeys = pd.read_csv(venuekeysfile)
+dfVenueKeys = dfVenueKeys.dropna(subset=['channel_id'])
+
+
+
+
+#give user option to select their venue
+venueDropdown = widgets.Dropdown(
+    options=dfVenueKeys['venue_id'],
+    value=dfVenueKeys['venue_id'][0],
+    description='Venue ID:',
+    disabled=False,
+)
+
+
+container = widgets.HBox(children=[venueDropdown])
+
+#print(venueDropdown.value)
+
+#Retrieve the venue and begin graphing
+dfCollatedDataSet = pd.DataFrame(columns=['timestamp', 'entry_id', 'temperature', 'rh', 'voltage', 'venue_id'])
+dfCollatedUseDiaries = pd.DataFrame(columns=['start', 'end', 'entry_id', 'venue_id'])
+for index, venueSensorDetails in dfVenueKeys.iterrows():
+    
+    sensorMacOfSelection = venueSensorDetails['sensor_MAC']
+    venueOfSelection = str(venueSensorDetails['venue_id'])
+    dfTempDataSet = pd.read_csv('deviceData/'+ "venue_" + venueOfSelection + "_with_device_" + sensorMacOfSelection + '.csv' )
+    dfTempDataSet = dfTempDataSet.dropna()
+    dfTempDataSet['timestamp'] = pd.to_datetime(dfTempDataSet['timestamp'])
+    dfTempDataSet['venue_id'] = venueSensorDetails['venue_id']
+
+    #dfCollatedDataSet = dfCollatedDataSet.append(dfTempDataSet, ignore_index=True)
+    dfCollatedDataSet = pd.concat([dfCollatedDataSet, dfTempDataSet]) 
+    #should already be datetimes - why is this here?
+    dfCollatedDataSet['timestamp'] = pd.to_datetime(dfCollatedDataSet['timestamp'])
+    
+    if os.path.exists('useDiaries/'+ "venue_" + venueOfSelection + "_with_device_" + sensorMacOfSelection + '.csv'):
+        dfUseDiary = pd.read_csv('useDiaries/'+ "venue_" + venueOfSelection + "_with_device_" + sensorMacOfSelection + '.csv' )
+        dfUseDiary = dfUseDiary.fillna('')
+        dfUseDiary['start'] = pd.to_datetime(dfUseDiary['startUse'])
+        dfUseDiary['end'] = pd.to_datetime(dfUseDiary['endUse'])
+        dfUseDiary['venue_id'] = venueSensorDetails['venue_id']
+        
+
+        #dfCollatedUseDiaries = dfCollatedUseDiaries.append(dfUseDiary, ignore_index=True)
+        dfCollatedUseDiaries = pd.concat([dfCollatedUseDiaries, dfUseDiary])
+        #should already be datetimes - why is this here?
+        dfCollatedUseDiaries['start'] = pd.to_datetime(dfUseDiary['start'])
+        dfCollatedUseDiaries['end'] = pd.to_datetime(dfUseDiary['end'])
+    
+    #print('Loading data for venue: ', venueSensorDetails['venue_id']) 
+
+    
+#print('Check')
+#dfCollatedDataSet.sample(6)
+
+
+
+
+# Assign an empty figure widget with two traces
+trace0 = go.Scatter(customdata=dfCollatedDataSet[dfCollatedDataSet['venue_id'] == 0], 
+                    y=dfCollatedDataSet['temperature'], 
+                    x = dfCollatedDataSet['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='Temperature',
+                    )
+
+# trace1 = go.Scatter(customdata=dfCollatedDataSet[dfCollatedDataSet['venue_id'] == 0], 
+#                     y=dfCollatedDataSet['rh'], 
+#                     x = dfCollatedDataSet['timestamp'], 
+#                     mode='lines', 
+#                     hoverinfo='all', 
+#                     name='Relative Humidity',
+#)
+
+
+g = go.FigureWidget(data=[trace0], #, trace1],
+                    layout = go.Layout(
+                        yaxis=dict(range=[0,0])           
+                    ))
+
+
+#print("Job Done")
+
+
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Cell [0;32mIn[1], line 37[0m
+[1;32m     35[0m sensorMacOfSelection [38;5;241m=[39m venueSensorDetails[[38;5;124m'[39m[38;5;124msensor_MAC[39m[38;5;124m'[39m]
+[1;32m     36[0m venueOfSelection [38;5;241m=[39m [38;5;28mstr[39m(venueSensorDetails[[38;5;124m'[39m[38;5;124mvenue_id[39m[38;5;124m'[39m])
+[0;32m---> 37[0m dfTempDataSet [38;5;241m=[39m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mdeviceData/[39;49m[38;5;124;43m'[39;49m[38;5;241;43m+[39;49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mvenue_[39;49m[38;5;124;43m"[39;49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[43mvenueOfSelection[49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43m_with_device_[39;49m[38;5;124;43m"[39;49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[43msensorMacOfSelection[49m[43m [49m[38;5;241;43m+[39;49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43m.csv[39;49m[38;5;124;43m'[39;49m[43m [49m[43m)[49m
+[1;32m     38[0m dfTempDataSet [38;5;241m=[39m dfTempDataSet[38;5;241m.[39mdropna()
+[1;32m     39[0m dfTempDataSet[[38;5;124m'[39m[38;5;124mtimestamp[39m[38;5;124m'[39m] [38;5;241m=[39m pd[38;5;241m.[39mto_datetime(dfTempDataSet[[38;5;124m'[39m[38;5;124mtimestamp[39m[38;5;124m'[39m])
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/util/_decorators.py:211[0m, in [0;36mdeprecate_kwarg.<locals>._deprecate_kwarg.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m    209[0m     [38;5;28;01melse[39;00m:
+[1;32m    210[0m         kwargs[new_arg_name] [38;5;241m=[39m new_arg_value
+[0;32m--> 211[0m [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/util/_decorators.py:331[0m, in [0;36mdeprecate_nonkeyword_arguments.<locals>.decorate.<locals>.wrapper[0;34m(*args, **kwargs)[0m
+[1;32m    325[0m [38;5;28;01mif[39;00m [38;5;28mlen[39m(args) [38;5;241m>[39m num_allow_args:
+[1;32m    326[0m     warnings[38;5;241m.[39mwarn(
+[1;32m    327[0m         msg[38;5;241m.[39mformat(arguments[38;5;241m=[39m_format_argument_list(allow_args)),
+[1;32m    328[0m         [38;5;167;01mFutureWarning[39;00m,
+[1;32m    329[0m         stacklevel[38;5;241m=[39mfind_stack_level(),
+[1;32m    330[0m     )
+[0;32m--> 331[0m [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/io/parsers/readers.py:950[0m, in [0;36mread_csv[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)[0m
+[1;32m    935[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
+[1;32m    936[0m     dialect,
+[1;32m    937[0m     delimiter,
+[0;32m   (...)[0m
+[1;32m    946[0m     defaults[38;5;241m=[39m{[38;5;124m"[39m[38;5;124mdelimiter[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124m,[39m[38;5;124m"[39m},
+[1;32m    947[0m )
+[1;32m    948[0m kwds[38;5;241m.[39mupdate(kwds_defaults)
+[0;32m--> 950[0m [38;5;28;01mreturn[39;00m [43m_read[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[43mkwds[49m[43m)[49m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/io/parsers/readers.py:605[0m, in [0;36m_read[0;34m(filepath_or_buffer, kwds)[0m
+[1;32m    602[0m _validate_names(kwds[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mnames[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m))
+[1;32m    604[0m [38;5;66;03m# Create the parser.[39;00m
+[0;32m--> 605[0m parser [38;5;241m=[39m [43mTextFileReader[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwds[49m[43m)[49m
+[1;32m    607[0m [38;5;28;01mif[39;00m chunksize [38;5;129;01mor[39;00m iterator:
+[1;32m    608[0m     [38;5;28;01mreturn[39;00m parser
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/io/parsers/readers.py:1442[0m, in [0;36mTextFileReader.__init__[0;34m(self, f, engine, **kwds)[0m
+[1;32m   1439[0m     [38;5;28mself[39m[38;5;241m.[39moptions[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m] [38;5;241m=[39m kwds[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m]
+[1;32m   1441[0m [38;5;28mself[39m[38;5;241m.[39mhandles: IOHandles [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m
+[0;32m-> 1442[0m [38;5;28mself[39m[38;5;241m.[39m_engine [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_make_engine[49m[43m([49m[43mf[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mengine[49m[43m)[49m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/io/parsers/readers.py:1735[0m, in [0;36mTextFileReader._make_engine[0;34m(self, f, engine)[0m
+[1;32m   1733[0m     [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m mode:
+[1;32m   1734[0m         mode [38;5;241m+[39m[38;5;241m=[39m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m
+[0;32m-> 1735[0m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;241m=[39m [43mget_handle[49m[43m([49m
+[1;32m   1736[0m [43m    [49m[43mf[49m[43m,[49m
+[1;32m   1737[0m [43m    [49m[43mmode[49m[43m,[49m
+[1;32m   1738[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
+[1;32m   1739[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mcompression[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
+[1;32m   1740[0m [43m    [49m[43mmemory_map[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mmemory_map[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m[43m,[49m
+[1;32m   1741[0m [43m    [49m[43mis_text[49m[38;5;241;43m=[39;49m[43mis_text[49m[43m,[49m
+[1;32m   1742[0m [43m    [49m[43merrors[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding_errors[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mstrict[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m,[49m
+[1;32m   1743[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mstorage_options[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
+[1;32m   1744[0m [43m[49m[43m)[49m
+[1;32m   1745[0m [38;5;28;01massert[39;00m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m
+[1;32m   1746[0m f [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mhandles[38;5;241m.[39mhandle
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/io/common.py:856[0m, in [0;36mget_handle[0;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
+[1;32m    851[0m [38;5;28;01melif[39;00m [38;5;28misinstance[39m(handle, [38;5;28mstr[39m):
+[1;32m    852[0m     [38;5;66;03m# Check whether the filename is to be opened in binary mode.[39;00m
+[1;32m    853[0m     [38;5;66;03m# Binary mode does not support 'encoding' and 'newline'.[39;00m
+[1;32m    854[0m     [38;5;28;01mif[39;00m ioargs[38;5;241m.[39mencoding [38;5;129;01mand[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m ioargs[38;5;241m.[39mmode:
+[1;32m    855[0m         [38;5;66;03m# Encoding[39;00m
+[0;32m--> 856[0m         handle [38;5;241m=[39m [38;5;28;43mopen[39;49m[43m([49m
+[1;32m    857[0m [43m            [49m[43mhandle[49m[43m,[49m
+[1;32m    858[0m [43m            [49m[43mioargs[49m[38;5;241;43m.[39;49m[43mmode[49m[43m,[49m
+[1;32m    859[0m [43m            [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mioargs[49m[38;5;241;43m.[39;49m[43mencoding[49m[43m,[49m
+[1;32m    860[0m [43m            [49m[43merrors[49m[38;5;241;43m=[39;49m[43merrors[49m[43m,[49m
+[1;32m    861[0m [43m            [49m[43mnewline[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[1;32m    862[0m [43m        [49m[43m)[49m
+[1;32m    863[0m     [38;5;28;01melse[39;00m:
+[1;32m    864[0m         [38;5;66;03m# Binary mode[39;00m
+[1;32m    865[0m         handle [38;5;241m=[39m [38;5;28mopen[39m(handle, ioargs[38;5;241m.[39mmode)
+
+[0;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'deviceData/venue_28_with_device_3083988F1713.csv'
+FileNotFoundError: [Errno 2] No such file or directory: 'deviceData/venue_28_with_device_3083988F1713.csv'
+
