@@ -1,4 +1,4 @@
-timestamp,temperature,rh,original-timestamp, location
+timestamp,temperature,rh,original-timestamp,location
 2023-01-18T12:09:00Z,13,39,18/01/2023 12:09,nave
 2023-01-18T12:14:00Z,14,40,18/01/2023 12:14
 2023-01-18T12:19:00Z,14,37,18/01/2023 12:19
