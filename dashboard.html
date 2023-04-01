@@ -383,39 +383,36 @@ document.write(`
 <span class="n">venuekeysfile</span> <span class="o">=</span> <span class="s2">&quot;venue-keys.csv&quot;</span>
 <span class="n">dfVenueKeys</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">venuekeysfile</span><span class="p">)</span>
 
-<span class="n">dfDash</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days_captured&quot;</span><span class="p">])</span>
-
-
-<span class="c1">#print(&quot;%s\t%s\t%s\t%s&quot; % (&quot;Venue&quot;,&quot;first timestamp&quot;,&quot;last timestamp&quot;,&quot;days captured&quot;))</span>
-
+<span class="n">dfDash</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days_captured&quot;</span><span class="p">,</span><span class="s2">&quot;last_voltage&quot;</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">venueSensorDetails</span> <span class="ow">in</span> <span class="n">dfVenueKeys</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    
-    <span class="n">sensorMacOfSelection</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;sensor_MAC&#39;</span><span class="p">]</span>
-    <span class="n">venueOfSelection</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">])</span>
-    <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deviceData/&#39;</span><span class="o">+</span> <span class="s2">&quot;venue_&quot;</span> <span class="o">+</span> <span class="n">venueOfSelection</span> <span class="o">+</span> <span class="s2">&quot;_with_device_&quot;</span> <span class="o">+</span> <span class="n">sensorMacOfSelection</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span> <span class="p">)</span>
-    <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
-    <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span>
-    <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)]</span>
-    <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># eliminate rogue data</span>
-    <span class="c1">#print(&quot;%s\t%s\t%s\t%d&quot; %</span>
-    <span class="c1">#    (venueOfSelection, dfTempDataSet.timestamp.min().strftime(&#39;%Y-%m-%d %H:%M&#39;), dfTempDataSet.timestamp.max().strftime(&#39;%Y-%m-%d %H:%M&#39;), len(dfTempDataSet.timestamp)/288))</span>
-    <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">)])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">27</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># eliminate rogue data</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="c1">#print(&quot;%s\t%s\t%s\t%d&quot; %</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="c1">#    (venueOfSelection, dfTempDataSet.timestamp.min().strftime(&#39;%Y-%m-%d %H:%M&#39;), dfTempDataSet.timestamp.max().strftime(&#39;%Y-%m-%d %H:%M&#39;), len(dfTempDataSet.timestamp)/288))</span>
-<span class="ne">---&gt; </span><span class="mi">27</span> <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">/</span><span class="mi">288</span><span class="p">)])</span>
+    <span class="k">try</span><span class="p">:</span> 
+        <span class="n">sensorMacOfSelection</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;sensor_MAC&#39;</span><span class="p">]</span>
+        <span class="n">venueOfSelection</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">])</span>
+        <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deviceData/&#39;</span><span class="o">+</span> <span class="s2">&quot;venue_&quot;</span> <span class="o">+</span> <span class="n">venueOfSelection</span> <span class="o">+</span> <span class="s2">&quot;_with_device_&quot;</span> <span class="o">+</span> <span class="n">sensorMacOfSelection</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span> <span class="p">)</span>
+        <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
+        <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span>
+        <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)]</span>
+        <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># eliminate rogue data</span>
+        <span class="c1">#print(&quot;%s\t%s\t%s\t%d&quot; %</span>
+        <span class="c1">#    (venueOfSelection, dfTempDataSet.timestamp.min().strftime(&#39;%Y-%m-%d %H:%M&#39;), dfTempDataSet.timestamp.max().strftime(&#39;%Y-%m-%d %H:%M&#39;), len(dfTempDataSet.timestamp)/288))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">first_time</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">)</span>
+            <span class="n">last_time</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">)</span>
+            <span class="n">days_captured</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span><span class="o">/</span><span class="mi">288</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">first_time</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+            <span class="n">last_time</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+            <span class="n">days_captured</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">volts</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">voltage</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+            <span class="n">last_voltage</span> <span class="o">=</span> <span class="n">volts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">volts</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">10</span> 
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/pandas/_libs/tslibs/nattype.pyx:67,</span> in <span class="ni">pandas._libs.tslibs.nattype._make_error_func.f</span><span class="nt">()</span>
-
-<span class="ne">ValueError</span>: NaTType does not support strftime
+        <span class="k">except</span><span class="p">:</span> 
+            <span class="n">last_voltage</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="c1"># there aren&#39;t any good voltage readings</span>
+        <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">first_time</span><span class="p">,</span> <span class="n">last_time</span><span class="p">,</span> <span class="n">days_captured</span><span class="p">,</span> <span class="n">last_voltage</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown dashboard error.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -427,6 +424,308 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Venue</th>
+      <th>first_timestamp</th>
+      <th>last_timestamp</th>
+      <th>days_captured</th>
+      <th>last_voltage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2022-10-20 13:37</td>
+      <td>2023-04-01 15:34</td>
+      <td>128</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2023-01-30 14:36</td>
+      <td>2023-03-31 21:05</td>
+      <td>56</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2h</td>
+      <td>2023-02-12 10:47</td>
+      <td>2023-03-12 12:05</td>
+      <td>28</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2022-10-28 17:16</td>
+      <td>2023-01-30 06:21</td>
+      <td>91</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>2022-12-09 14:42</td>
+      <td>2023-03-31 10:09</td>
+      <td>90</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>2022-09-01 21:32</td>
+      <td>2022-09-16 13:23</td>
+      <td>0</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>2022-11-03 00:01</td>
+      <td>2023-03-14 08:10</td>
+      <td>120</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>2022-12-11 12:40</td>
+      <td>2023-04-01 15:35</td>
+      <td>67</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>2023-02-08 10:31</td>
+      <td>2023-02-15 14:19</td>
+      <td>7</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>2022-12-13 20:18</td>
+      <td>2023-01-24 11:30</td>
+      <td>39</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>2022-09-27 09:49</td>
+      <td>2023-04-01 15:34</td>
+      <td>169</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>2022-12-02 17:45</td>
+      <td>2023-01-06 13:01</td>
+      <td>5</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>2023-02-07 10:12</td>
+      <td>2023-04-01 15:33</td>
+      <td>45</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>15</td>
+      <td>2022-10-28 19:59</td>
+      <td>2022-11-10 21:29</td>
+      <td>12</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>16</td>
+      <td>2022-10-28 11:05</td>
+      <td>2023-03-26 18:20</td>
+      <td>42</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>17</td>
+      <td>2023-03-16 16:09</td>
+      <td>2023-04-01 15:37</td>
+      <td>14</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>18</td>
+      <td>2023-02-01 09:50</td>
+      <td>2023-03-02 21:32</td>
+      <td>13</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>19</td>
+      <td>2022-12-08 07:09</td>
+      <td>2023-03-30 19:32</td>
+      <td>99</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>20</td>
+      <td>2023-01-06 13:16</td>
+      <td>2023-01-06 16:41</td>
+      <td>0</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>21</td>
+      <td>2023-01-13 10:25</td>
+      <td>2023-04-01 15:35</td>
+      <td>50</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>22</td>
+      <td>2022-12-05 21:10</td>
+      <td>2023-01-22 19:06</td>
+      <td>6</td>
+      <td>3.8</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>23</td>
+      <td>2023-02-16 10:12</td>
+      <td>2023-02-23 17:49</td>
+      <td>7</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>24</td>
+      <td>2022-12-06 22:29</td>
+      <td>2023-01-22 12:42</td>
+      <td>24</td>
+      <td>3.9</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>25</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>26</td>
+      <td>2022-12-10 18:06</td>
+      <td>2023-03-16 11:56</td>
+      <td>3</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>28</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>29</td>
+      <td>2023-03-19 15:05</td>
+      <td>2023-03-25 10:54</td>
+      <td>2</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>31</td>
+      <td>2023-01-16 14:37</td>
+      <td>2023-01-20 13:30</td>
+      <td>1</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>33</td>
+      <td>2023-01-17 23:18</td>
+      <td>2023-01-29 19:27</td>
+      <td>1</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>36</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>97lh</td>
+      <td>2023-02-04 10:50</td>
+      <td>2023-02-12 12:30</td>
+      <td>8</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>97s</td>
+      <td>2023-01-18 12:09</td>
+      <td>2023-02-12 08:41</td>
+      <td>25</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>98</td>
+      <td>2022-12-24 12:27</td>
+      <td>2023-02-06 18:26</td>
+      <td>43</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>99</td>
+      <td>2022-10-27 16:32</td>
+      <td>2022-11-03 07:45</td>
+      <td>4</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 
