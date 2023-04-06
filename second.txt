@@ -1,0 +1,19 @@
+]
+},
+{
+ "cell_type": "code",
+ "execution_count": null,
+ "metadata": {
+  "tags": [
+   "hide-cell"
+  ],
+  "vscode": {
+   "languageId": "python"
+  }
+ },
+ "outputs": [],
+ "source": [
+  "## Model for our script to generate.  We will get passed the bare venue number.\n",
+  "import heathack\n",
+  "\n",
+  "# This needs to be filled in by the generating script\n",
