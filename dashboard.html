@@ -388,10 +388,13 @@ document.write(`
     <tr style="text-align: right;">
       <th></th>
       <th>Venue</th>
-      <th>first_timestamp</th>
-      <th>last_timestamp</th>
-      <th>days_captured</th>
-      <th>last_voltage</th>
+      <th>Starts</th>
+      <th>Ends</th>
+      <th>Capture days</th>
+      <th>Last Voltage</th>
+      <th>Max awake (s)</th>
+      <th>Min awake (s)</th>
+      <th>Median awake(s)</th>
     </tr>
   </thead>
   <tbody>
@@ -399,9 +402,12 @@ document.write(`
       <th>0</th>
       <td>1</td>
       <td>2022-10-20 13:37</td>
-      <td>2023-05-24 17:22</td>
+      <td>2023-05-24 20:36</td>
       <td>176</td>
       <td>4.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>1</th>
@@ -409,6 +415,9 @@ document.write(`
       <td>2023-01-30 14:36</td>
       <td>2023-05-20 09:36</td>
       <td>100</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
@@ -418,14 +427,20 @@ document.write(`
       <td>2023-04-09 13:49</td>
       <td>53</td>
       <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
       <td>2022-10-28 17:16</td>
-      <td>2023-05-24 17:24</td>
+      <td>2023-05-24 20:33</td>
       <td>126</td>
       <td>3.8</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>4</th>
@@ -434,6 +449,9 @@ document.write(`
       <td>2023-05-16 18:03</td>
       <td>100</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>5</th>
@@ -442,6 +460,9 @@ document.write(`
       <td>2023-02-01 14:33</td>
       <td>5</td>
       <td>3.1</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>6</th>
@@ -450,14 +471,20 @@ document.write(`
       <td>2023-03-14 08:10</td>
       <td>120</td>
       <td>3.2</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>7</th>
       <td>8</td>
       <td>2022-12-11 12:40</td>
-      <td>2023-05-24 17:20</td>
-      <td>120</td>
+      <td>2023-05-24 20:34</td>
+      <td>121</td>
       <td>3.5</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>8</th>
@@ -466,6 +493,9 @@ document.write(`
       <td>2023-02-15 14:19</td>
       <td>7</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>9</th>
@@ -473,6 +503,9 @@ document.write(`
       <td>2022-12-13 20:18</td>
       <td>2023-01-24 11:30</td>
       <td>39</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
@@ -482,6 +515,9 @@ document.write(`
       <td>2023-05-01 08:52</td>
       <td>191</td>
       <td>3.3</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>11</th>
@@ -490,6 +526,9 @@ document.write(`
       <td>2023-01-06 13:01</td>
       <td>5</td>
       <td>4.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>12</th>
@@ -498,6 +537,9 @@ document.write(`
       <td>2023-04-14 14:19</td>
       <td>57</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>13</th>
@@ -506,6 +548,9 @@ document.write(`
       <td>2022-11-10 21:29</td>
       <td>12</td>
       <td>3.3</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>14</th>
@@ -514,6 +559,9 @@ document.write(`
       <td>2023-05-21 18:24</td>
       <td>73</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>15</th>
@@ -522,6 +570,9 @@ document.write(`
       <td>2023-05-13 05:58</td>
       <td>53</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>16</th>
@@ -530,6 +581,9 @@ document.write(`
       <td>2023-03-02 21:32</td>
       <td>13</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>17</th>
@@ -538,6 +592,9 @@ document.write(`
       <td>2023-03-30 19:32</td>
       <td>99</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>18</th>
@@ -546,14 +603,20 @@ document.write(`
       <td>2023-01-06 16:41</td>
       <td>0</td>
       <td>3.6</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>19</th>
       <td>21</td>
       <td>2023-01-13 10:25</td>
-      <td>2023-05-24 17:22</td>
-      <td>103</td>
+      <td>2023-05-24 20:37</td>
+      <td>104</td>
       <td>4.0</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>20</th>
@@ -562,6 +625,9 @@ document.write(`
       <td>2023-01-22 19:06</td>
       <td>6</td>
       <td>3.8</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>21</th>
@@ -570,6 +636,9 @@ document.write(`
       <td>2023-02-23 17:49</td>
       <td>7</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>22</th>
@@ -578,10 +647,16 @@ document.write(`
       <td>2023-01-22 12:42</td>
       <td>24</td>
       <td>3.9</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>23</th>
       <td>25</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
@@ -594,6 +669,9 @@ document.write(`
       <td>2023-03-16 11:56</td>
       <td>3</td>
       <td>3.3</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>25</th>
@@ -601,6 +679,9 @@ document.write(`
       <td>2023-04-06 09:32</td>
       <td>2023-05-24 09:22</td>
       <td>46</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
@@ -610,6 +691,9 @@ document.write(`
       <td>2023-03-25 10:54</td>
       <td>2</td>
       <td>3.6</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>27</th>
@@ -617,7 +701,10 @@ document.write(`
       <td>2023-01-16 14:37</td>
       <td>2023-04-09 05:38</td>
       <td>3</td>
-      <td>0.301</td>
+      <td>3.01</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>28</th>
@@ -625,31 +712,43 @@ document.write(`
       <td>2023-01-17 23:18</td>
       <td>2023-04-30 12:40</td>
       <td>2</td>
-      <td>0.348</td>
+      <td>3.48</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>29</th>
       <td>36</td>
       <td>2023-03-30 11:10</td>
-      <td>2023-05-24 14:21</td>
-      <td>48</td>
-      <td>0.362</td>
+      <td>2023-05-24 18:20</td>
+      <td>49</td>
+      <td>3.62</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>30</th>
       <td>40</td>
       <td>2023-04-18 08:52</td>
-      <td>2023-05-24 17:23</td>
+      <td>2023-05-24 20:22</td>
       <td>35</td>
-      <td>0.363</td>
+      <td>3.65</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>31</th>
       <td>41</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
+      <td>2023-05-12 21:19</td>
+      <td>2023-05-24 17:19</td>
+      <td>10</td>
+      <td>3.13</td>
+      <td>191</td>
+      <td>0</td>
+      <td>15</td>
     </tr>
     <tr>
       <th>32</th>
@@ -657,6 +756,9 @@ document.write(`
       <td>2023-02-04 10:50</td>
       <td>2023-02-12 12:30</td>
       <td>8</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
@@ -666,6 +768,9 @@ document.write(`
       <td>2023-02-12 08:41</td>
       <td>25</td>
       <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>34</th>
@@ -674,6 +779,9 @@ document.write(`
       <td>2023-02-06 18:26</td>
       <td>43</td>
       <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>35</th>
@@ -681,6 +789,9 @@ document.write(`
       <td>2022-10-27 16:32</td>
       <td>2022-11-03 07:45</td>
       <td>4</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
       <td>None</td>
     </tr>
   </tbody>
