@@ -4,6 +4,11 @@ import os
 import shutil
 from datetime import datetime, timedelta
 
+def columns(x):
+    return {
+        5: ["timestamp", "entry_id", "temperature", "rh", "voltage"],
+        6: ["timestamp", "entry_id", "temperature", "rh", "voltage","awake_time"]
+    }[x]
 
 dataTimeNow = datetime.today().strftime('%Y%m%d_%H%M%S')
 
@@ -59,8 +64,8 @@ for deviceIndex, deviceRow in venueKeys.iterrows() :
         response = requests.get(f'https://api.thingspeak.com/channels/{thisChannelID}/feeds.json{params}');
         responseRaw = response.json()['feeds']
         responseDataFrame = pd.json_normalize(responseRaw)
-        if (responseDataFrame.size > 0) : 
-            responseDataFrame.columns = ["timestamp", "entry_id", "temperature", "rh", "voltage"]
+        if (responseDataFrame.size >0) : 
+            responseDataFrame.columns = columns(len(responseDataFrame.columns))
 
             print('Adding new data to file: \n')
             print(responseDataFrame)
