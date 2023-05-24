@@ -367,63 +367,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="dashboard">
 <h1>Dashboard<a class="headerlink" href="#dashboard" title="Permalink to this heading">#</a></h1>
-<div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports </span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-
-<span class="c1"># Get the possible data venues</span>
-<span class="n">venuekeysfile</span> <span class="o">=</span> <span class="s2">&quot;venue-keys.csv&quot;</span>
-<span class="n">dfVenueKeys</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">venuekeysfile</span><span class="p">)</span>
-
-<span class="n">dfDash</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Venue&quot;</span><span class="p">,</span><span class="s2">&quot;first_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;last_timestamp&quot;</span><span class="p">,</span><span class="s2">&quot;days_captured&quot;</span><span class="p">,</span><span class="s2">&quot;last_voltage&quot;</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">venueSensorDetails</span> <span class="ow">in</span> <span class="n">dfVenueKeys</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="k">try</span><span class="p">:</span> 
-        <span class="n">sensorMacOfSelection</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;sensor_MAC&#39;</span><span class="p">]</span>
-        <span class="n">venueOfSelection</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">])</span>
-        <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deviceData/&#39;</span><span class="o">+</span> <span class="s2">&quot;venue_&quot;</span> <span class="o">+</span> <span class="n">venueOfSelection</span> <span class="o">+</span> <span class="s2">&quot;_with_device_&quot;</span> <span class="o">+</span> <span class="n">sensorMacOfSelection</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span> <span class="p">)</span>
-        <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
-        <span class="n">dfTempDataSet</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">venueSensorDetails</span><span class="p">[</span><span class="s1">&#39;venue_id&#39;</span><span class="p">]</span>
-        <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)]</span>
-        <span class="n">dfTempDataSet</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="p">[(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">temperature</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># eliminate rogue data</span>
-        <span class="c1">#print(&quot;%s\t%s\t%s\t%d&quot; %</span>
-        <span class="c1">#    (venueOfSelection, dfTempDataSet.timestamp.min().strftime(&#39;%Y-%m-%d %H:%M&#39;), dfTempDataSet.timestamp.max().strftime(&#39;%Y-%m-%d %H:%M&#39;), len(dfTempDataSet.timestamp)/288))</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
-            <span class="n">first_time</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">)</span>
-            <span class="n">last_time</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">)</span>
-            <span class="n">days_captured</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span><span class="o">/</span><span class="mi">288</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">first_time</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
-            <span class="n">last_time</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
-            <span class="n">days_captured</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">volts</span> <span class="o">=</span> <span class="n">dfTempDataSet</span><span class="o">.</span><span class="n">voltage</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-            <span class="n">last_voltage</span> <span class="o">=</span> <span class="n">volts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">volts</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">10</span> 
-
-        <span class="k">except</span><span class="p">:</span> 
-            <span class="n">last_voltage</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="c1"># there aren&#39;t any good voltage readings</span>
-        <span class="n">dfDash</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)]</span> <span class="o">=</span> <span class="p">([</span><span class="n">venueOfSelection</span><span class="p">,</span> <span class="n">first_time</span><span class="p">,</span> <span class="n">last_time</span><span class="p">,</span> <span class="n">days_captured</span><span class="p">,</span> <span class="n">last_voltage</span><span class="p">])</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unknown dashboard error.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">dfDash</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <div class="output text_html"><div>
 <style scoped>
@@ -455,7 +399,7 @@ document.write(`
       <th>0</th>
       <td>1</td>
       <td>2022-10-20 13:37</td>
-      <td>2023-05-24 05:23</td>
+      <td>2023-05-24 09:17</td>
       <td>176</td>
       <td>4.0</td>
     </tr>
@@ -479,7 +423,7 @@ document.write(`
       <th>3</th>
       <td>3</td>
       <td>2022-10-28 17:16</td>
-      <td>2023-05-24 05:20</td>
+      <td>2023-05-24 09:15</td>
       <td>126</td>
       <td>3.8</td>
     </tr>
@@ -511,7 +455,7 @@ document.write(`
       <th>7</th>
       <td>8</td>
       <td>2022-12-11 12:40</td>
-      <td>2023-05-24 05:21</td>
+      <td>2023-05-24 09:16</td>
       <td>120</td>
       <td>3.5</td>
     </tr>
@@ -607,7 +551,7 @@ document.write(`
       <th>19</th>
       <td>21</td>
       <td>2023-01-13 10:25</td>
-      <td>2023-05-24 05:24</td>
+      <td>2023-05-24 09:18</td>
       <td>103</td>
       <td>4.0</td>
     </tr>
@@ -655,7 +599,7 @@ document.write(`
       <th>25</th>
       <td>28</td>
       <td>2023-04-06 09:32</td>
-      <td>2023-05-24 05:22</td>
+      <td>2023-05-24 09:17</td>
       <td>46</td>
       <td>None</td>
     </tr>
@@ -687,7 +631,7 @@ document.write(`
       <th>29</th>
       <td>36</td>
       <td>2023-03-30 11:10</td>
-      <td>2023-05-24 02:24</td>
+      <td>2023-05-24 06:23</td>
       <td>48</td>
       <td>0.361</td>
     </tr>
