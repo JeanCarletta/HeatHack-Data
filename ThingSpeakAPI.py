@@ -36,7 +36,7 @@ venueKeys.reset_index()
 
 for deviceIndex, deviceRow in venueKeys.iterrows() :
 
-    filePath = os.path.join(baseDirectory, 'deviceData', "venue_" + str(deviceRow['venue_id']) + "_with_device_" + deviceRow['sensor_MAC'] + '.csv')
+    filePath = os.path.join(baseDirectory, 'deviceData', "venue_" + str(deviceRow['venue_id']) +  '.csv')
     params = ''
     
     # Load existing data file if it exists and get the last timestamp
@@ -80,7 +80,7 @@ for deviceIndex, deviceRow in venueKeys.iterrows() :
         else:
             print(f"No new data for sensor {deviceRow['channel_id']}.")
     except Exception as e:
-        print("Error getting device data: ", str(e))
+        print("Error getting device data from Thingspeak feed, could be standalone monitor", str(e))
         pass
 
     
