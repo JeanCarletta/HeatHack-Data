@@ -1,2 +1,2 @@
-timestamp,entry_id,temperature,rh,awake_time
-2023-12-04T18:13:57Z,7711,15,54,29
+timestamp,temperature,rh
+2023-12-04T18:13:57Z,15,54
