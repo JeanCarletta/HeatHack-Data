@@ -7,6 +7,8 @@ chapters:
 - file: data-download
 - file: temperature-plots
 - file: rh-plots
+- file: before-Jul-2023-temperature-plots
+- file: before-Jul-2023-rh-plots
 - file: calibration-plots
   sections:
     - file: DHT22-comparisons/sensors-11-17
