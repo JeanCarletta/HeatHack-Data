@@ -19,13 +19,12 @@ venueKeysPath = os.path.join(baseDirectory, 'venue-keys.csv')
 
 try:
     venueKeys = pd.read_csv(venueKeysPath, dtype={'channel_id':str})
-    print(venueKeys)
+    #print(venueKeys)
 except Exception as e: 
     print("Error getting venue-key data from file: ", str(e))
 
 # Drop all entries that don't have a channel id - these are standalone and handled separately.
 venueKeys = venueKeys.dropna(subset=['channel_id'])
-print(venueKeys)
 
 # Extract Channel Ids for the API Call 
 deviceChannelIds = venueKeys['channel_id']
@@ -40,10 +39,10 @@ for deviceIndex, deviceRow in venueKeys.iterrows() :
     params = ''
     
     # Load existing data file if it exists and get the last timestamp
-    try:
+    try: ## if there's no file, it doesn't try to get anything.  
         existingData = pd.read_csv(filePath)
         existingData['timestamp'] = existingData['timestamp'] .str.replace('T',' ')
-        # Z signifies UTC +0 - does it also consider daylight savings?
+        # Z signifies UTC +0 
         existingData['timestamp'] = existingData['timestamp'] .str.replace('Z','')
         lastTimestampString = existingData.iloc[-1]['timestamp']
         lastTimestamp = datetime.strptime(lastTimestampString, '%Y-%m-%d %H:%M:%S')
@@ -53,12 +52,12 @@ for deviceIndex, deviceRow in venueKeys.iterrows() :
         print(f'Getting data from {lastTimestampDelta} onwards')
 
     except Exception as e:
-        # Set 'dawn of time' value to bring back all data from sensors deployment
-        params = '?start={\'2022-01-01 00:00:00\'}'
+        # Set 'dawn of time' value to bring back all data from sensors deployment FROM OUR CURRENT TRANCHE CUTOFF DATE
+        params = '?start={\'2023-08-01 00:00:00\'}' ## NB this was \'2022-01-01 00:00:00\' to get the first tranche of data
         print('No existing timestamp. Getting all data. ' + str(e))
     
 
-    print(deviceRow['channel_id'])
+    print(deviceRow['channel_id'], "is venue ", deviceRow['venue_id']) # Next time, print the venue number as well!
     thisChannelID = deviceRow['channel_id']
     try:
         response = requests.get(f'https://api.thingspeak.com/channels/{thisChannelID}/feeds.json{params}');
