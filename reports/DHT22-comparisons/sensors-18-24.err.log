@@ -1,0 +1,191 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+
+import plotly.graph_objects as go
+
+import pandas as pd
+df = pd.read_csv("sensors-18-24.csv")
+df["timestamp"] = pd.to_datetime(df['timestamp'])
+
+RHtrace18 = go.Scatter(customdata=df, 
+                    y=df['h18'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='18',
+                    )
+RHtrace19 = go.Scatter(customdata=df, 
+                    y=df['h19'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='19',
+                    )
+
+RHtrace20 = go.Scatter(customdata=df, 
+                    y=df['h20'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='20',
+                    )
+RHtrace21 = go.Scatter(customdata=df, 
+                    y=df['h21'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='21',
+                    )
+
+RHtrace22 = go.Scatter(customdata=df, 
+                    y=df['h22'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='22',
+                    )
+RHtrace23 = go.Scatter(customdata=df, 
+                    y=df['h23'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='23',
+                    )
+RHtrace24 = go.Scatter(customdata=df, 
+                    y=df['h24'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='24',
+                    )
+RHtraceLascar = go.Scatter(customdata=df, 
+                    y=df['Lascar-RH'], 
+                    x = df['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='Lascar',
+                    )
+
+g = go.FigureWidget(data=[RHtrace18, RHtrace19, RHtrace20, RHtrace21, RHtrace22, RHtrace23, RHtrace24,RHtraceLascar])
+g.layout.title = 'RH readings - sensors 18 to 24'
+g.layout.xaxis.title= 'timestamp'
+g.layout.yaxis.title = "%RH"
+
+
+fig = go.Figure(g)
+
+fig.show()
+
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 74[0m
+[1;32m     69[0m g[38;5;241m.[39mlayout[38;5;241m.[39myaxis[38;5;241m.[39mtitle [38;5;241m=[39m [38;5;124m"[39m[38;5;124m%[39m[38;5;124mRH[39m[38;5;124m"[39m
+[1;32m     72[0m fig [38;5;241m=[39m go[38;5;241m.[39mFigure(g)
+[0;32m---> 74[0m [43mfig[49m[38;5;241;43m.[39;49m[43mshow[49m[43m([49m[43m)[49m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/plotly/basedatatypes.py:3410[0m, in [0;36mBaseFigure.show[0;34m(self, *args, **kwargs)[0m
+[1;32m   3377[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+[1;32m   3378[0m [38;5;124;03mShow a figure using either the default renderer(s) or the renderer(s)[39;00m
+[1;32m   3379[0m [38;5;124;03mspecified by the renderer argument[39;00m
+[0;32m   (...)[0m
+[1;32m   3406[0m [38;5;124;03mNone[39;00m
+[1;32m   3407[0m [38;5;124;03m"""[39;00m
+[1;32m   3408[0m [38;5;28;01mimport[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mio[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpio[39;00m
+[0;32m-> 3410[0m [38;5;28;01mreturn[39;00m [43mpio[49m[38;5;241;43m.[39;49m[43mshow[49m([38;5;28mself[39m, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/_plotly_utils/importers.py:36[0m, in [0;36mrelative_import.<locals>.__getattr__[0;34m(import_name)[0m
+[1;32m     34[0m     rel_module [38;5;241m=[39m [38;5;124m"[39m[38;5;124m.[39m[38;5;124m"[39m[38;5;241m.[39mjoin(rel_path_parts[:[38;5;241m-[39m[38;5;241m1[39m])
+[1;32m     35[0m     class_name [38;5;241m=[39m import_name
+[0;32m---> 36[0m     class_module [38;5;241m=[39m [43mimportlib[49m[38;5;241;43m.[39;49m[43mimport_module[49m[43m([49m[43mrel_module[49m[43m,[49m[43m [49m[43mparent_name[49m[43m)[49m
+[1;32m     37[0m     [38;5;28;01mreturn[39;00m [38;5;28mgetattr[39m(class_module, class_name)
+[1;32m     39[0m [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(
+[1;32m     40[0m     [38;5;124m"[39m[38;5;124mmodule [39m[38;5;132;01m{__name__!r}[39;00m[38;5;124m has no attribute [39m[38;5;132;01m{name!r}[39;00m[38;5;124m"[39m[38;5;241m.[39mformat(
+[1;32m     41[0m         name[38;5;241m=[39mimport_name, [38;5;18m__name__[39m[38;5;241m=[39mparent_name
+[1;32m     42[0m     )
+[1;32m     43[0m )
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/importlib/__init__.py:127[0m, in [0;36mimport_module[0;34m(name, package)[0m
+[1;32m    125[0m             [38;5;28;01mbreak[39;00m
+[1;32m    126[0m         level [38;5;241m+[39m[38;5;241m=[39m [38;5;241m1[39m
+[0;32m--> 127[0m [38;5;28;01mreturn[39;00m [43m_bootstrap[49m[38;5;241;43m.[39;49m[43m_gcd_import[49m[43m([49m[43mname[49m[43m[[49m[43mlevel[49m[43m:[49m[43m][49m[43m,[49m[43m [49m[43mpackage[49m[43m,[49m[43m [49m[43mlevel[49m[43m)[49m
+
+File [0;32m<frozen importlib._bootstrap>:1014[0m, in [0;36m_gcd_import[0;34m(name, package, level)[0m
+
+File [0;32m<frozen importlib._bootstrap>:991[0m, in [0;36m_find_and_load[0;34m(name, import_)[0m
+
+File [0;32m<frozen importlib._bootstrap>:975[0m, in [0;36m_find_and_load_unlocked[0;34m(name, import_)[0m
+
+File [0;32m<frozen importlib._bootstrap>:671[0m, in [0;36m_load_unlocked[0;34m(spec)[0m
+
+File [0;32m<frozen importlib._bootstrap_external>:843[0m, in [0;36mexec_module[0;34m(self, module)[0m
+
+File [0;32m<frozen importlib._bootstrap>:219[0m, in [0;36m_call_with_frames_removed[0;34m(f, *args, **kwds)[0m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/plotly/io/_renderers.py:9[0m
+[1;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpackaging[39;00m[38;5;21;01m.[39;00m[38;5;21;01mversion[39;00m [38;5;28;01mimport[39;00m Version
+[1;32m      7[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m [38;5;28;01mimport[39;00m optional_imports
+[0;32m----> 9[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mio[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_base_renderers[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     10[0m     MimetypeRenderer,
+[1;32m     11[0m     ExternalRenderer,
+[1;32m     12[0m     PlotlyRenderer,
+[1;32m     13[0m     NotebookRenderer,
+[1;32m     14[0m     KaggleRenderer,
+[1;32m     15[0m     AzureRenderer,
+[1;32m     16[0m     ColabRenderer,
+[1;32m     17[0m     JsonRenderer,
+[1;32m     18[0m     PngRenderer,
+[1;32m     19[0m     JpegRenderer,
+[1;32m     20[0m     SvgRenderer,
+[1;32m     21[0m     PdfRenderer,
+[1;32m     22[0m     BrowserRenderer,
+[1;32m     23[0m     IFrameRenderer,
+[1;32m     24[0m     SphinxGalleryHtmlRenderer,
+[1;32m     25[0m     SphinxGalleryOrcaRenderer,
+[1;32m     26[0m     CoCalcRenderer,
+[1;32m     27[0m     DatabricksRenderer,
+[1;32m     28[0m )
+[1;32m     29[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mio[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_utils[39;00m [38;5;28;01mimport[39;00m validate_coerce_fig_to_dict
+[1;32m     31[0m ipython [38;5;241m=[39m optional_imports[38;5;241m.[39mget_module([38;5;124m"[39m[38;5;124mIPython[39m[38;5;124m"[39m)
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/plotly/io/_base_renderers.py:10[0m
+[1;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m [38;5;28;01mimport[39;00m utils, optional_imports
+[1;32m      9[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mio[39;00m [38;5;28;01mimport[39;00m to_json, to_image, write_image, write_html
+[0;32m---> 10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mio[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_orca[39;00m [38;5;28;01mimport[39;00m ensure_server
+[1;32m     11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mio[39;00m[38;5;21;01m.[39;00m[38;5;21;01m_utils[39;00m [38;5;28;01mimport[39;00m plotly_cdn_url
+[1;32m     12[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01moffline[39;00m[38;5;21;01m.[39;00m[38;5;21;01moffline[39;00m [38;5;28;01mimport[39;00m _get_jconfig, get_plotlyjs
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/plotly/io/_orca.py:14[0m
+[1;32m     11[0m [38;5;28;01mfrom[39;00m [38;5;21;01mpathlib[39;00m [38;5;28;01mimport[39;00m Path
+[1;32m     12[0m [38;5;28;01mfrom[39;00m [38;5;21;01mshutil[39;00m [38;5;28;01mimport[39;00m which
+[0;32m---> 14[0m [38;5;28;01mimport[39;00m [38;5;21;01mtenacity[39;00m
+[1;32m     16[0m [38;5;28;01mimport[39;00m [38;5;21;01mplotly[39;00m
+[1;32m     17[0m [38;5;28;01mfrom[39;00m [38;5;21;01mplotly[39;00m[38;5;21;01m.[39;00m[38;5;21;01mfiles[39;00m [38;5;28;01mimport[39;00m PLOTLY_DIR, ensure_writable_plotly_dir
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/tenacity/__init__.py:653[0m
+[1;32m    648[0m             [38;5;28;01mreturn[39;00m r[38;5;241m.[39mwraps(f)
+[1;32m    650[0m         [38;5;28;01mreturn[39;00m wrap
+[0;32m--> 653[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtenacity[39;00m[38;5;21;01m.[39;00m[38;5;21;01masyncio[39;00m [38;5;28;01mimport[39;00m AsyncRetrying  [38;5;66;03m# noqa:E402,I100[39;00m
+[1;32m    655[0m [38;5;28;01mif[39;00m tornado:
+[1;32m    656[0m     [38;5;28;01mfrom[39;00m [38;5;21;01mtenacity[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtornadoweb[39;00m [38;5;28;01mimport[39;00m TornadoRetrying
+
+[0;31mModuleNotFoundError[0m: No module named 'tenacity.asyncio'
+
