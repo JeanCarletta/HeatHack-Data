@@ -28,9 +28,7 @@ Having when users are in the space and what they need for temperature has real b
 
 ## Data storage
 
-Data archive files, one per venue: 
-
-- a CSV file that always contains all of the data acquired so far for that venue. :TODO: how big will these get over the year at 5 min intervals?  Still small enough to be OK, right?  When do we need to worry about splitting it up - once a year or once a decade?
+Data archive files, one per venue, that we need to split by year to keep them from getting too big.  
 
 ## Intended automation:
 

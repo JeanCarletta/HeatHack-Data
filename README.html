@@ -157,20 +157,22 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data-download.html">Downloading data to plot separately</a></li>
-<li class="toctree-l1"><a class="reference internal" href="temperature-plots.html">After July 2023 - Temperature Plots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="rh-plots.html">After July 2023 - Relative Humidity Plots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="before-Jul-2023-temperature-plots.html">Before July 2023 - Temperature Plots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="before-Jul-2023-rh-plots.html">Before July 2023 - Relative Humidity Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Aug2024-Jul2025-temp.html">Aug2024-now - Temperature Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Aug2024-Jul2025-rh.html">Aug2024-now - RH Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Aug2023-Jul2024-temp.html">Aug2023-Jul2024 - Temperature Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Aug2023-Jul2024-rh.html">Aug2023-Jul2024 - RH Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="before-Jul-2023-temperature-plots.html">Before August 2023 - Temperature Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="before-Jul-2023-rh-plots.html">Before August 2023 - Relative Humidity Plots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extras.html">Extras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="calibration-plots.html">Comparing sensors - our calibration plots</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="DHT22-comparisons/sensors-11-17.html">Sensors 11-17</a></li>
 <li class="toctree-l2"><a class="reference internal" href="DHT22-comparisons/sensors-18-24.html">Sensors 18-24</a></li>
 <li class="toctree-l2"><a class="reference internal" href="DHT22-comparisons/sensors-1-2-10-25-26-27.html">Sensors 1, 2, 10, 25-27</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extras.html">Extras</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run-time.html">Run time</a></li>
 <li class="toctree-l1"><a class="reference internal" href="with-use-diary.html">Temperature against space use</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run-time.html">Run time</a></li>
 </ul>
 
     </div>
@@ -411,10 +413,7 @@ document.write(`
 </section>
 <section id="data-storage">
 <h2>Data storage<a class="headerlink" href="#data-storage" title="Permalink to this heading">#</a></h2>
-<p>Data archive files, one per venue:</p>
-<ul class="simple">
-<li><p>a CSV file that always contains all of the data acquired so far for that venue. :TODO: how big will these get over the year at 5 min intervals?  Still small enough to be OK, right?  When do we need to worry about splitting it up - once a year or once a decade?</p></li>
-</ul>
+<p>Data archive files, one per venue, that we need to split by year to keep them from getting too big.</p>
 </section>
 <section id="intended-automation">
 <h2>Intended automation:<a class="headerlink" href="#intended-automation" title="Permalink to this heading">#</a></h2>
