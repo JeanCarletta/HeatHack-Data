@@ -5,20 +5,24 @@ format: jb-book
 root: intro
 chapters:
 - file: data-download
-- file: temperature-plots
-- file: rh-plots
+#- file: temperature-plots
+#- file: rh-plots
+- file: Aug2024-Jul2025-temp
+- file: Aug2024-Jul2025-rh
+- file: Aug2023-Jul2024-temp
+- file: Aug2023-Jul2024-rh
 - file: before-Jul-2023-temperature-plots
 - file: before-Jul-2023-rh-plots
+- file: extras
+- file: dashboard
+
 - file: calibration-plots
   sections:
     - file: DHT22-comparisons/sensors-11-17
     - file: DHT22-comparisons/sensors-18-24
     - file: DHT22-comparisons/sensors-1-2-10-25-26-27
-
-- file: extras
-- file: dashboard
-- file: run-time
 - file: with-use-diary 
+- file: run-time
     
 
 
