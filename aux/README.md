@@ -33,11 +33,13 @@ We're assuming an August run, when things are quiet.  The goal is to leave every
 
 - invoke a jupyter book venv and build all:  jupyter-book build . --builder html --all
 
-- test
+- check local build looks OK
+
+- restart the automatic GitHub Thingspeak drawdown and book build.
 
 - push
 
-- restart the automatic GitHub Thingspeak drawdown and book build.
+
 
 
 
