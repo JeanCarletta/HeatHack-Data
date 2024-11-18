@@ -4,6 +4,11 @@ import os
 import shutil
 from datetime import datetime, timedelta
 
+# CHANGE THIS EVERY YEAR - EDIT HERE
+current_year = "Aug2024-Jul2025"
+start_of_year = '?start={\'2024-08-01 00:00:00\'}' ## NB this was \'2022-01-01 00:00:00\' to get the first tranche of data
+# END EDIT HERE
+
 def columns(x):
     return {
         5: ["timestamp", "entry_id", "temperature", "rh", "voltage"],
@@ -35,7 +40,7 @@ venueKeys.reset_index()
 
 for deviceIndex, deviceRow in venueKeys.iterrows() :
 
-    filePath = os.path.join(baseDirectory, 'deviceData', "venue_" + str(deviceRow['venue_id']) +  '.csv')
+    filePath = os.path.join(baseDirectory, 'deviceData', current_year, "venue_" + str(deviceRow['venue_id']) +  '.csv')
     params = ''
     
     # Load existing data file if it exists and get the last timestamp
@@ -53,7 +58,7 @@ for deviceIndex, deviceRow in venueKeys.iterrows() :
 
     except Exception as e:
         # Set 'dawn of time' value to bring back all data from sensors deployment FROM OUR CURRENT TRANCHE CUTOFF DATE
-        params = '?start={\'2023-08-01 00:00:00\'}' ## NB this was \'2022-01-01 00:00:00\' to get the first tranche of data
+        params = start_of_year
         print('No existing timestamp. Getting all data. ' + str(e))
     
 
