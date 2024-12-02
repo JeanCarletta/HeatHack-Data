@@ -4,7 +4,7 @@ If you prefer to plot your data in Excel, you can download your full data here:
 
 - [Data CSV files](https://github.com/JeanCarletta/HeatHack-Data/tree/main/deviceData)
 
-Choose your data file from the list and click on it.  You'll see something like the image shows - click on the image to make it larger.  If you click on "Raw", you can then right-click to see a menu that will let you save the data file as CSV.
+Find the file you want by clicking on the right folder and then the right file.  You'll see something like the image shows - click on the image to make it larger.  You can download the data as a CSV file using the download button.  In the image it is circled in red.  
 
 ```{image} ./download-data.png
 :alt: choose the raw data format to save the data
