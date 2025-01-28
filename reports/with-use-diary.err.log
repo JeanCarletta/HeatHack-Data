@@ -1,0 +1,144 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Imports 
+import ipywidgets as widgets
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go   
+import os
+from IPython.display import display
+
+# Get the possible data venues
+venuekeysfile = "diary-venue-keys.csv"
+dfVenueKeys = pd.read_csv(venuekeysfile)
+dfVenueKeys = dfVenueKeys.dropna(subset=['channel_id'])
+
+
+
+#Retrieve the venue and begin graphing
+dfCollatedDataSet = pd.DataFrame() # columns=['timestamp', 'entry_id', 'temperature', 'rh', 'voltage', 'awake_time', 'original_timestamp', 'location', 'venue_id']
+dfCollatedUseDiaries = pd.DataFrame(columns=['start', 'end', 'entry_id', 'venue_id'])
+for index, venueSensorDetails in dfVenueKeys.iterrows():
+    
+    # sensorMacOfSelection = venueSensorDetails['sensor_MAC']
+    venueOfSelection = str(venueSensorDetails['venue_id'])
+    #print(venueOfSelection)
+    dfTempDataSet = pd.read_csv('deviceData/before_2023_07/'+ "venue_" + venueOfSelection + '.csv' )
+    dfTempDataSet.sample(6)
+    dfTempDataSet = dfTempDataSet.dropna()
+    dfTempDataSet['timestamp'] = pd.to_datetime(dfTempDataSet['timestamp'])
+    dfTempDataSet['venue_id'] = venueSensorDetails['venue_id']
+    #display(dfTempDataSet)
+
+    #dfCollatedDataSet = dfCollatedDataSet.append(dfTempDataSet, ignore_index=True)
+    dfCollatedDataSet = pd.concat([dfCollatedDataSet, dfTempDataSet]) 
+    #should already be datetimes - why is this here?
+    dfCollatedDataSet['timestamp'] = pd.to_datetime(dfCollatedDataSet['timestamp'])
+    
+    if os.path.exists('useDiaries/'+ "venue_" + venueOfSelection + "_diary" + '.csv'):
+        dfUseDiary = pd.read_csv('useDiaries/'+ "venue_" + venueOfSelection + "_diary" + '.csv' )
+        dfUseDiary = dfUseDiary.fillna('')
+        dfUseDiary['start'] = pd.to_datetime(dfUseDiary['startUse'])
+        dfUseDiary['end'] = pd.to_datetime(dfUseDiary['endUse'])
+        dfUseDiary['venue_id'] = venueSensorDetails['venue_id']
+        #display(dfUseDiary)
+
+        #dfCollatedUseDiaries = dfCollatedUseDiaries.append(dfUseDiary, ignore_index=True)
+        dfCollatedUseDiaries = pd.concat([dfCollatedUseDiaries, dfUseDiary])
+        #should already be datetimes - why is this here?
+        dfCollatedUseDiaries['start'] = pd.to_datetime(dfUseDiary['start'])
+        dfCollatedUseDiaries['end'] = pd.to_datetime(dfUseDiary['end'])
+    
+    #print('Loading data for venue: ', venueSensorDetails['venue_id']) 
+
+    
+#print('Check')
+#dfCollatedDataSet.sample(6)
+
+row=dfVenueKeys.iloc(0)[0]
+value=row[0]
+
+#give user option to select their venue
+venueDropdown = widgets.Dropdown(
+    options=dfVenueKeys['venue_id'],
+    value=dfVenueKeys['venue_id'][0],
+    description='Venue ID:',
+    disabled=False,
+)
+
+
+container = widgets.HBox(children=[venueDropdown])
+
+
+# Assign an empty figure widget with two traces
+trace0 = go.Scatter(customdata=dfCollatedDataSet[dfCollatedDataSet['venue_id'] == 0], 
+                    y=dfCollatedDataSet['temperature'], 
+                    x = dfCollatedDataSet['timestamp'], 
+                    mode='lines', 
+                    hoverinfo='all', 
+                    name='Temperature',
+                    )
+
+# trace1 = go.Scatter(customdata=dfCollatedDataSet[dfCollatedDataSet['venue_id'] == 0], 
+#                     y=dfCollatedDataSet['rh'], 
+#                     x = dfCollatedDataSet['timestamp'], 
+#                     mode='lines', 
+#                     hoverinfo='all', 
+#                     name='Relative Humidity',
+#)
+
+
+g = go.FigureWidget(data=[trace0], #, trace1],
+                    layout = go.Layout(
+                        yaxis=dict(range=[0,0])           
+                    ))
+
+
+#print("Job Done")
+
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mImportError[0m                               Traceback (most recent call last)
+Cell [0;32mIn[1], line 89[0m
+[1;32m     72[0m trace0 [38;5;241m=[39m go[38;5;241m.[39mScatter(customdata[38;5;241m=[39mdfCollatedDataSet[dfCollatedDataSet[[38;5;124m'[39m[38;5;124mvenue_id[39m[38;5;124m'[39m] [38;5;241m==[39m [38;5;241m0[39m], 
+[1;32m     73[0m                     y[38;5;241m=[39mdfCollatedDataSet[[38;5;124m'[39m[38;5;124mtemperature[39m[38;5;124m'[39m], 
+[1;32m     74[0m                     x [38;5;241m=[39m dfCollatedDataSet[[38;5;124m'[39m[38;5;124mtimestamp[39m[38;5;124m'[39m], 
+[0;32m   (...)[0m
+[1;32m     77[0m                     name[38;5;241m=[39m[38;5;124m'[39m[38;5;124mTemperature[39m[38;5;124m'[39m,
+[1;32m     78[0m                     )
+[1;32m     80[0m [38;5;66;03m# trace1 = go.Scatter(customdata=dfCollatedDataSet[dfCollatedDataSet['venue_id'] == 0], [39;00m
+[1;32m     81[0m [38;5;66;03m#                     y=dfCollatedDataSet['rh'], [39;00m
+[1;32m     82[0m [38;5;66;03m#                     x = dfCollatedDataSet['timestamp'], [39;00m
+[0;32m   (...)[0m
+[1;32m     85[0m [38;5;66;03m#                     name='Relative Humidity',[39;00m
+[1;32m     86[0m [38;5;66;03m#)[39;00m
+[0;32m---> 89[0m g [38;5;241m=[39m [43mgo[49m[38;5;241;43m.[39;49m[43mFigureWidget[49m[43m([49m[43mdata[49m[38;5;241;43m=[39;49m[43m[[49m[43mtrace0[49m[43m][49m[43m,[49m[43m [49m[38;5;66;43;03m#, trace1],[39;49;00m
+[1;32m     90[0m [43m                    [49m[43mlayout[49m[43m [49m[38;5;241;43m=[39;49m[43m [49m[43mgo[49m[38;5;241;43m.[39;49m[43mLayout[49m[43m([49m
+[1;32m     91[0m [43m                        [49m[43myaxis[49m[38;5;241;43m=[39;49m[38;5;28;43mdict[39;49m[43m([49m[38;5;28;43mrange[39;49m[38;5;241;43m=[39;49m[43m[[49m[38;5;241;43m0[39;49m[43m,[49m[38;5;241;43m0[39;49m[43m][49m[43m)[49m[43m           [49m
+[1;32m     92[0m [43m                    [49m[43m)[49m[43m)[49m
+[1;32m     95[0m [38;5;66;03m#print("Job Done")[39;00m
+
+File [0;32m/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/plotly/missing_anywidget.py:13[0m, in [0;36mFigureWidget.__init__[0;34m(self, *args, **kwargs)[0m
+[1;32m     12[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21m__init__[39m([38;5;28mself[39m, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m---> 13[0m     [38;5;28;01mraise[39;00m [38;5;167;01mImportError[39;00m([38;5;124m"[39m[38;5;124mPlease install anywidget to use the FigureWidget class[39m[38;5;124m"[39m)
+
+[0;31mImportError[0m: Please install anywidget to use the FigureWidget class
+
