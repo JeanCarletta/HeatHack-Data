@@ -1,5 +1,5 @@
 pydata-sphinx-theme #==0.13.1
-jupyter-book# ==0.15.1
+jupyter-book # ==0.15.1
 #pyppeteer
 #ipython
 plotly #==6.0.0
