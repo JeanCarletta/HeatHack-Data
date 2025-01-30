@@ -38,9 +38,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-    - name: install dependencies
-      run: |
-          pip install requests pandas datetime ipywidgets plotly IPython
+    #- name: install dependencies
+      #run: |
+          #pip install requests pandas datetime ipywidgets plotly IPython
     
     - name: execute ThingSpeak py script # run the run.py to get the latest data
       run: |
