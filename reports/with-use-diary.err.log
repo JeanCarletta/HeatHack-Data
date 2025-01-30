@@ -18,10 +18,10 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 # Imports 
 import ipywidgets as widgets
 import pandas as pd
-import plotly.express as px
+#import plotly.express as px
 import plotly.graph_objects as go   
 import os
-from IPython.display import display
+#from IPython.display import display
 
 # Get the possible data venues
 venuekeysfile = "diary-venue-keys.csv"
