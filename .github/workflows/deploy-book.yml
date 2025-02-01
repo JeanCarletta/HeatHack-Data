@@ -13,7 +13,8 @@ jobs:
   setUpPython:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4 #@v2
+    - name: checkOut
+      uses: actions/checkout@v4 #@v2
 
     # Install dependencies
     - name: Set up Python 
@@ -24,10 +25,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-
-    #- name: install dependencies
-    #  run: |
-    #      pip install requests pandas datetime ipywidgets plotly IPython
 
   updateData:
     runs-on: ubuntu-latest
