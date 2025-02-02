@@ -10,8 +10,25 @@ on:
     
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
-  build:
+
+  setUp:
     runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v4 #@v2
+
+    - name: Set up Python 
+      uses: actions/setup-python@v5 #@v2
+      with:
+        python-version: '3.10' #3.8
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+  fetchThingspeakData:
+    runs-on: ubuntu-latest
+    needs: setUp
     env:
       TYPE: ${{ secrets.TYPE }}
       PID: ${{ secrets.PID }}
@@ -24,25 +41,12 @@ jobs:
       AUTHP: ${{ secrets.AUTHP }}
       CLIURL: ${{ secrets.CLIURL }}
     steps:
-    - uses: actions/checkout@v4 #@v2
     - name: Set the git credentials
       run: |
              git config --global user.name "GithubActionRunner"
              git config --global user.email "githubactionrunner"
-    # Install dependencies
-    - name: Set up Python
-      uses: actions/setup-python@v5 #@v2
-      with:
-        python-version: '3.10' #3.8
-
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-    #- name: install dependencies
-      #run: |
-          #pip install requests pandas datetime ipywidgets plotly IPython
-    
-    - name: execute ThingSpeak py script # run the run.py to get the latest data
+   
+    - name: Retrieve new data from ThingSpeak # run the run.py to get the latest data
       run: |
            python3 ThingSpeakAPI.py
     
@@ -55,31 +59,20 @@ jobs:
            git commit -m "updating thingspeak data $(date +"%D %T")"
            git push
               
-    # Download 'data' folder from Google Drive
-    - name: Make Python Directory #Download from Google Drive
-      run: |
-            mkdir -p data
-#         python3 downloadDrive.py
-            
-# # mv -f input data/input
-# # mv -f output data/output
-# # mv -f processed data/processed
+  build:
+    runs-on: ubuntu-latest
+    needs: fetchThingspeakData
 
-#     # Process the data for duplicates etc
-#     - name: Process Data
-#       run: |
-#         python3 process_data.py data
-
-#     - name: Upload Processed Files
-#     # Upload processed files
-#       run: |
-#         python3 uploadDrive.py data
-
-    # Build the book
+    steps:
     - name: Build the book
       run: |
         jupyter-book clean .
         jupyter-book build . --builder html
+    
+    - name: Upload HTML artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: "_build/html"
     
   deploy:
     permissions:
@@ -106,3 +99,25 @@ jobs:
     #   with:
     #     github_token: ${{ secrets.GITHUB_TOKEN }}
     #     publish_dir: ./_build/html
+
+# stuff about fetching standalone data from Google Drive -
+# never used but we should reinstate a simpler version for Thermopros.
+   # Download 'data' folder from Google Drive
+#   - name: Make Python Directory #Download from Google Drive
+#   run: |
+#        mkdir -p data
+#         python3 downloadDrive.py
+         
+# # mv -f input data/input
+# # mv -f output data/output
+# # mv -f processed data/processed
+
+#     # Process the data for duplicates etc
+#     - name: Process Data
+#       run: |
+#         python3 process_data.py data
+
+#     - name: Upload Processed Files
+#     # Upload processed files
+#       run: |
+#         python3 uploadDrive.py data
