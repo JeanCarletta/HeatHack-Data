@@ -11,7 +11,7 @@ on:
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
 
-  setUp:
+  build:
     runs-on: ubuntu-latest
     env:
       TYPE: ${{ secrets.TYPE }}
@@ -55,11 +55,6 @@ jobs:
            git commit -m "updating thingspeak data $(date +"%D %T")"
            git push
               
-  build:
-    runs-on: ubuntu-latest
-    needs: setUp
-
-    steps:
     - name: Build the book
       run: |
         jupyter-book clean .
