@@ -13,17 +13,17 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    # env:
-    #   TYPE: ${{ secrets.TYPE }}
-    #   PID: ${{ secrets.PID }}
-    #   PKID: ${{ secrets.PKID }}
-    #   PK: ${{ secrets.PK }}
-    #   CE: ${{ secrets.CE }}
-    #   CID: ${{ secrets.CID }}
-    #   AURI: ${{ secrets.AURI }}
-    #   TURI: ${{ secrets.TURI }}
-    #   AUTHP: ${{ secrets.AUTHP }}
-    #   CLIURL: ${{ secrets.CLIURL }}
+    env:
+      TYPE: ${{ secrets.TYPE }}
+      PID: ${{ secrets.PID }}
+      PKID: ${{ secrets.PKID }}
+      PK: ${{ secrets.PK }}
+      CE: ${{ secrets.CE }}
+      CID: ${{ secrets.CID }}
+      AURI: ${{ secrets.AURI }}
+      TURI: ${{ secrets.TURI }}
+      AUTHP: ${{ secrets.AUTHP }}
+      CLIURL: ${{ secrets.CLIURL }}
     steps:
     - name: Check out repo
       uses: actions/checkout@v4 #@v2
