@@ -10,8 +10,7 @@ on:
     
 # This job installs dependencies, builds the book, and pushes it to `gh-pages`
 jobs:
-
-  build:
+  deploy-book:
     runs-on: ubuntu-latest
     env:
       TYPE: ${{ secrets.TYPE }}
@@ -25,10 +24,13 @@ jobs:
       AUTHP: ${{ secrets.AUTHP }}
       CLIURL: ${{ secrets.CLIURL }}
     steps:
-    - name: Check out repo
-      uses: actions/checkout@v4 #@v2
-
-    - name: Set up Python 
+    - uses: actions/checkout@v4 #@v2
+    - name: Set the git credentials
+      run: |
+             git config --global user.name "GithubActionRunner"
+             git config --global user.email "githubactionrunner"
+    # Install dependencies
+    - name: Set up Python
       uses: actions/setup-python@v5 #@v2
       with:
         python-version: '3.10' #3.8
@@ -36,13 +38,11 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-
-    - name: Set the git credentials
-      run: |
-             git config --global user.name "GithubActionRunner"
-             git config --global user.email "githubactionrunner"
-   
-    - name: Retrieve new data from ThingSpeak # run the run.py to get the latest data
+    #- name: install dependencies
+      #run: |
+          #pip install requests pandas datetime ipywidgets plotly IPython
+    
+    - name: execute ThingSpeak py script # run the run.py to get the latest data
       run: |
            python3 ThingSpeakAPI.py
     
@@ -55,50 +55,12 @@ jobs:
            git commit -m "updating thingspeak data $(date +"%D %T")"
            git push
               
-    - name: Build the book
+    # Download 'data' folder from Google Drive
+    - name: Make Python Directory #Download from Google Drive
       run: |
-        jupyter-book clean .
-        jupyter-book build . --builder html
-    
-    - name: Upload HTML artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: "_build/html"
-    
-  deploy:
-    permissions:
-      id-token: write
-      pages: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-
- 
-    # - name: Move Processed data to public folder
-    #   run: |
-    #     mv data ./_build/html/
-    # # Push the book's HTML to github-pages
-    # - name: GitHub Pages action
-    #   uses: peaceiris/actions-gh-pages@v3.6.1
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: ./_build/html
-
-# stuff about fetching standalone data from Google Drive -
-# never used but we should reinstate a simpler version for Thermopros.
-   # Download 'data' folder from Google Drive
-#   - name: Make Python Directory #Download from Google Drive
-#   run: |
-#        mkdir -p data
+            mkdir -p data
 #         python3 downloadDrive.py
-         
+            
 # # mv -f input data/input
 # # mv -f output data/output
 # # mv -f processed data/processed
@@ -112,3 +74,35 @@ jobs:
 #     # Upload processed files
 #       run: |
 #         python3 uploadDrive.py data
+
+    # Build the book
+    - name: Build the book
+      run: |
+        jupyter-book clean .
+        jupyter-book build . --builder html
+    
+    # Build Pdf via html
+    # - name: Build the pdf via HTML
+    #   run: |
+    #     jupyter-book build ./ --builder pdfhtml
+    #     mv ./_build/pdf/book.pdf ./_build/html/book-via-html.pdf
+    
+    # Build Pdf via latex
+    #- name: Build the pdf via latex
+    #  run: |
+    #    sudo apt-get update
+    #    sudo apt-get install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-xetex latexmk
+    #    jupyter-book build ./ --builder pdflatex
+    #    mv ./_build/latex/book.pdf ./_build/html/book-via-latex.pdf
+        
+    #it should be possible to update this to use actions/deploy-pages@v4,  actions/upload-pages-artifact@v3, 
+    # but struggling to make it work.
+    - name: Move Processed data to public folder
+      run: |
+        mv data ./_build/html/
+    # Push the book's HTML to github-pages
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_build/html
