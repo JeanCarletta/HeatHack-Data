@@ -13,6 +13,17 @@ jobs:
 
   setUp:
     runs-on: ubuntu-latest
+    env:
+      TYPE: ${{ secrets.TYPE }}
+      PID: ${{ secrets.PID }}
+      PKID: ${{ secrets.PKID }}
+      PK: ${{ secrets.PK }}
+      CE: ${{ secrets.CE }}
+      CID: ${{ secrets.CID }}
+      AURI: ${{ secrets.AURI }}
+      TURI: ${{ secrets.TURI }}
+      AUTHP: ${{ secrets.AUTHP }}
+      CLIURL: ${{ secrets.CLIURL }}
     steps:
     - name: Check out repo
       uses: actions/checkout@v4 #@v2
@@ -26,21 +37,6 @@ jobs:
       run: |
         pip install -r requirements.txt
 
-  fetchThingspeakData:
-    runs-on: ubuntu-latest
-    needs: setUp
-    env:
-      TYPE: ${{ secrets.TYPE }}
-      PID: ${{ secrets.PID }}
-      PKID: ${{ secrets.PKID }}
-      PK: ${{ secrets.PK }}
-      CE: ${{ secrets.CE }}
-      CID: ${{ secrets.CID }}
-      AURI: ${{ secrets.AURI }}
-      TURI: ${{ secrets.TURI }}
-      AUTHP: ${{ secrets.AUTHP }}
-      CLIURL: ${{ secrets.CLIURL }}
-    steps:
     - name: Set the git credentials
       run: |
              git config --global user.name "GithubActionRunner"
@@ -61,7 +57,7 @@ jobs:
               
   build:
     runs-on: ubuntu-latest
-    needs: fetchThingspeakData
+    needs: setUp
 
     steps:
     - name: Build the book
