@@ -32,13 +32,15 @@
     "# Imports \n",
     "import ipywidgets as widgets\n",
     "import pandas as pd\n",
-    "import plotly.express as px\n",
+    "#import plotly.express as px\n",
     "import plotly.graph_objects as go   \n",
-    "from IPython.display import display\n",
+    "#from IPython.display import display\n",
     "\n",
     "import datetime\n",
     "\n",
     "subdir = \"${subdir}\" # where to find the data to plot.\n",
+    "plot_width = 1000\n",
+    "plot_height = 800\n",
     "\n",
     "# First, set up the data.\n",
     "\n",
@@ -121,7 +123,8 @@
    "metadata": {
     "tags": [
      "hide-cell",
-     "remove-cell"
+     "remove-cell",
+     "full-width"
     ]
    },
    "outputs": [],
@@ -178,7 +181,8 @@
    "metadata": {
     "tags": [
      "hide-input",
-     "remove-input"
+     "remove-input",
+     "full-width"
     ]
    },
    "outputs": [],
@@ -234,8 +238,8 @@
     "              updatemenus=updatemenu, \n",
     "              autosize = True, \n",
     "              title= \"${plot_title}\",\n",
-    "              width=1000, \n",
-    "              height=500,\n",
+    "              width=plot_width, \n",
+    "              height=plot_height,\n",
     ")\n",
     "\n",
     "fig.update_layout(\n",

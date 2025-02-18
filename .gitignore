@@ -1,3 +1,6 @@
+#JC's local junk not to lodge
+local/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
