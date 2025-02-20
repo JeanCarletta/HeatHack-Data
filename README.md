@@ -1,14 +1,94 @@
-# testbook
+# HeatHack Data Book
+
+A Jupyter Book to produce plots of temperature and relative humidity data from anonymous community buildings in the UK.  The operators identify their building by venue number.  They are anonymous on-line for security; we don't want to increase the risk of theft.
+
+The data is collected using volunteer-built battery-operated "thermal monitors" that send batch data to ThingSpeak feeds at least every 8 hours  (see venue-keys.csv for a mapping from venue number to feed).  We run a workflow on Github every 4 hours to pull over the data and rebuild the book.
+
+:TODO: reduce that; we don't need it done during the night.
+
+The entire book is rebuilt every time because just changing the data won't trigger a page rebuild.
+
+:TODO: ensure all old data is treated as static large storage files and find out how to avoid these pages getting rebuilt if the source code hasn't changed.
+
+Currently data for all venues relating to temperature is loaded at once; venues choose their data using their venue number and a dropdown menu.  If we grow to the point that pages are very slow to load because there is too much data, it might faster to have a chapter per venue instead.  We tried this in a branch and the build time was higher, so there's a balance to think about.
+
+We have the makings of a workflow that takes csv files mailed to us and puts that in the plots, and our users want that as some find it easier to understand our plots than the apps on commercial thermal monitors or using Excel.  The sketch we have, which we haven't used in production, authenticates to a Google account to draw down the csv files.
+
+:TODO: understand the security of this and think about doing it the other way around, authenticating to Github to push the csv files over using Google App Scripts.  This seems in our circumstances like it might be safer.
 
 We want to produce plots of temperature and RH data from the venues.  There are around 40 venues with different data feeds.  We do not want the venues to be identifiable in case that increases the risk of theft.   The plots should be produced automatically using Jupyter Book.  It would be better if there are 40 books in a list rather than one book with 40 "chapters" because that would reduce processing time - the entire book wouldn't be rebuilt every time one data file changes - but I think this is very difficult.  In practice, the more venues we have at once in the programme and the more of them that have internet, the less likely we are to do enough processing to get charged for it. 
 
-## Two uses cases:
+We also have a demonstration page for how to plot temperature/RH against building use if the building use is expressed in a simple CSV format - although we have a better version of this (that also includes plotting against the heating timings for venues without optimised start control, if known) in the HeatHack-Extras repository for venues numbered in the late 70s-80s.
 
-- Internet-connected sensors (this is most venues, we think): Each venue has one device sending data to Thingspeak, and therefore one Thingspeak feed identified by id number with a Read API key.  We only intend to use ThingSpeak for reassurance that the data is there, and port the data to Github for plotting properly.
+:TODO: think about how to make this practical for users. Can they fill in a form to create the CSV for a typical week?  Can we easily get it from a complete busy/free calendar, keeping in mind that their calendar events are not always things that they would put the heating on for?  Should we put a line at 18C to reinforce e.g. WHO policy objectives, like we used to for 16C?
 
-- Standalone sensors for venues without wifi:  they email data to our automated mailbox every week or two.  There is a unique id for the device included in the header line for each file. Every download is the complete flash contents for the device and therefore may contain data this is redundant with what's already been downloaded.
+:TODO: create a page with a tip:  use screenshots in something like a Powerpoint to create a story about what heating control issues.
 
-## Inputs:
+## Setting up a new venue
+
+### for venues with monitors that produce CSV files
+
+Add venue to venue-keys.csv, leaving the ThingSpeak-related fields blank.  There are some past examples of this.
+
+:TODO: check - do we automatically create the deviceData/venue-X.csv file when first needed? If not, change instructions to say put the header line in until we do...
+
+### for venues sending data to ThingSpeak
+
+Set up the ThingSpeak feed and ensure the public view only has a gauge that shows most recent temperature and the time it relates to.  This is used by the venues to test whether the monitor is working (procedure:  turn monitor off; wait 10s; turn on; check for new data arriving in the next few minutes; occasionally ThingSpeak has longer delays.)  They can also check by looking for 10 blue flashes on the device after the initial "battery on" flash.
+
+
+In the repo, add venue to venue-keys.csv.
+
+Draw down ThingSpeak data by invoking ThingSpeakAPI.py; clean out any pre-existing test data; build locally and check.
+
+:TODO: some monitors produce rogue data when first switched on; can we auto-clean that?  I think it's just temperature?  It varies too quickly to be real data.
+
+## Yearly maintenance
+
+This is required to split data files, create new pages for temperature and RH by calendar year, and move old data to static storage; otherwise they are too big. See the aux directory Readme.
+
+## Change to the code
+
+Because we have multiple pages that are all very similar, instead of writing our core pages separately, we generate them using a python script that declares variables for use in a template (using the mako library).  See the aux directory.
+
+## Environmental responsibility
+
+:TODO: ensure we drop as many data columns as possible to reduce page load times.
+:TODO: review the requirements and the workflow file - are we doing installing software for the build that we don't need?  
+:TODO: Consider whether we can refactor the code rather than using mako to define similar things multiple times, and whether that helps with the build or run times.   Is mako really needed here?
+:TODO: any other easy green wins for us?
+:TODO: would it be better usability and greener to generate data reports for the venues on demand, and this risky financially as then we don't control the number of builds?  How much do they/should they look at each other's venues?  
+
+## Tracking 
+
+We will need something to convince potential funders and partners this gets used in future.  We definitely need to do this for the Guide Book at least.
+
+
+:TODO: shift repo to heathack-org, where what's stopping us is understanding how to redirect.  
+:TODO: consider using something besides Google Analytics - initial investigations suggested we might find this easier if we moved to Cloudfare hosting.  
+
+## Monitor code and electronics build instructions
+
+:TODO: Lack of training is keeping the electronics volunteer from using version control on the repo - fix this.
+
+ ## Implementation notes
+
+Plotly express is syntactic sugar over graph_objects; drop down into the graph_objects themselves allows more possibilities for formatting.  Some very useful plotting capabilities, like dropdown menus allowing date choices, might require further libraries (that start to be paid quickly, I think), cf Dash.  UI controls don't necessarily need to be in the plots themselves.
+
+Information about non-plotly approaches:  https://jupyterbook.org/interactive/interactive.html One consideration is whether they're going to need internet access to look at graphs - they might not have that when they're together if they meet on the premises.  Altair sounded like it might be useful in that situation.   
+
+
+## Plans for adding csv files emailed from commercial devices 
+
+We worked out how to do this before for our own devices and there is some code relating to this in the repo, but
+
+- the original csv data format was very difficult to work with because the developer was just dumping the entire flash contents and looping through to fill it; we redesigned the format to clear the flash every time and just retain timestamped readings with (I think) one extra header line for the venue number.
+
+- for commercial devices, the venue number isn't in the csv file, so we need to get that off the email somehow.  For the device most venues are using, that can't be done in the app (no subject line control) so we would have to modify the process.  They would email to themselves and then forward to us changing the subject line, or better, upload using a web form.
+
+### Original rough notes about the process, giving these caveats
+
+#### Inputs:
 
 :TODO: CK check that I'm describing how the feeds/devices are identified correctly in both cases below, create these CSV files from your database, ensure there is a realistic example data file for standalone version in Github or on Google Drive, depending on what's being written and tested, plus upload a calibration data file to Github.
 
@@ -26,11 +106,7 @@ Having when users are in the space and what they need for temperature has real b
 
 5. Calibration data sets - rows are timestamps, columns are output temp and RH readings from around 10 devices at a time with a header that uses some value from (1) and (2), uploaded to Github by hand.  
 
-## Data storage
-
-Data archive files, one per venue, that we need to split by year to keep them from getting too big.  
-
-## Intended automation:
+#### Intended automation:
 
 1. Google App Script (standalone only): Once a day, look for all new data email attachments (from standalone venues) and place in a Google Drive. Keep the emailed data in Google Drive for safety but ensure it doesn't get processed twice.  Status:  API calls tested but needs refinement to get the right attachments, those sent to data@heathack.org, which is only an alias.  Probably still needs error logs for us to clean up problems.
 
@@ -48,34 +124,7 @@ Data archive files, one per venue, that we need to split by year to keep them fr
 
 5. GitHub Action (both): triggered on repository changes, build the book containing the plots on Github Pages. Status: experimentation towards what we want only.
 
-## Desired plots
-
-The plots are about doing what's usable and possible easily - we should specify them functionally with minimal requirements and what we'd ideally like to see.  Even just the basic plot with pan and zoom is a step up from what the users usually have.
-
-1. basic plot as below.
-
-1.  a plot that lets people judge whether they are keeping their users within comfortable temperature bounds when the space is in use.  Minimally, this is a horizontal line at 16C, the Child Care Commission minimum.  If we can handle space diaries and manage vertical bars with shading plus perhaps a text label with the demand temperature, that would be brilliant. Summaries of performance for each timeslot  (Monday 9-11: 90% within 1C of 18C or some summary plot, and so on).
-
-2. dropdown a start date and end date (or always a week or month at a time?), choose temperature or RH, and just create a basic plot that way with the usual plotly pan/zoom etc options.  This is to make it easier to explore the data; after a year the initial plots will be hard to read if we use the whole data archive.   
-
-3.  Calibration plot - graph the 10 devices against each other with a legend that lets individual devices be hidden.
-
- ## Implementation notes
-
-Plotly express is syntactic sugar over graph_objects; drop down into the graph_objects themselves allows more possibilities for formatting.  Some very useful plotting capabilities, like dropdown menus allowing date choices, might require further libraries (that start to be paid quickly, I think), cf Dash.  UI controls don't necessarily need to be in the plots themselves.
-
-- minimal version, horizontal line at 16C (the child care commission minimum).
-- (not relevant for this particular data, just a test).  This plot is also useful for assessing temperature control, especially on a short test for overshoot that tries holding a building at a temperature - cheapest in autumn.  We'll want similar plots showing suggested RH bounds for the comfort of people and for organs/oil paintings and so on.
-
-Note pan, zoom, etc - not beautiful, but even this basic level of plot would work.  I wonder whether they'll be worried by the rogue readings.  We could probably remove based on improbably fast temperature changes.
-
-On our current thingspeak feeds, temperature is field1 and RH is field2 - we may be able to assign better names in future.  I think I had to change the time format so that's either some scripting or a configuration change on the platform.
 
 
 
-Information about non-plotly approaches:  https://jupyterbook.org/interactive/interactive.html One consideration is whether they're going to need internet access to look at graphs - they might not have that when they're together if they meet on the premises.  Altair sounded like it might be useful in that situation.
-
-:TODO: find out if we can hide the code.
-
-The graphs look terrible in pdf as generated via html.
 

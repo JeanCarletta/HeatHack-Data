@@ -31,6 +31,8 @@ We're assuming an August run, when things are quiet.  The goal is to leave every
 
 - replace the subdirectories in deviceData with the split data (current and past year)
 
+- change the year in ThingSpeakAPI.py so it adds new data to the one you have added, not what is now the past year; run to test (some of the current data files should grow)
+
 - invoke a jupyter book venv and build all:  jupyter-book build . --builder html --all
 
 - check local build looks OK
