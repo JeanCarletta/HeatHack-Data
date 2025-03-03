@@ -14,12 +14,7 @@ execute:
   # exclude-patterns: [DHT22-comparisons/plot-against-lascars] didn't seem to work.
   ## no sense in executing books every two hours if the data won't be changing - but remember to remove the exclusion when the code changes!! 
   ### actually, I think since the automatic build cleans first, we have to rebuild?
-  #exclude_patterns:
-  #  - 'Aug2023-Jul2024-rh'
-  #  - 'Aug2023-Jul2024-temp'
-  #  - 'before-Jul-2023-temperature-plots'
-  #  - 'before-Jul-2023-rh-plots'
-  #  - 'sensors*'  # - '*pattern3withwildcard' is the example
+  exclude_patterns: ['Aug2023-Jul2024-rh.ipynb','Aug2023-Jul2024-temp.ipynb','before-Jul-2023-temperature-plots.ipynb','before-Jul-2023-rh-plots.ipynb','DHT22-comparisons/*.ipynb']
   timeout: 50
 
 # Define the name of the latex output file for PDF builds
